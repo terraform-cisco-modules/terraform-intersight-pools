@@ -12,7 +12,7 @@ locals {
 #____________________________________________________________
 
 module "intersight_ip_pools" {
-  source           = "scotttyso/pools-ip/intersight"
+  source           = "terraform-cisco-modules/pools-ip/intersight"
   version          = ">= 1.0.1"
   for_each         = { for ip in lookup(local.pools, "ip_pools", []) : ip.name => ip if lookup(local.modules, "ip_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -52,7 +52,7 @@ module "intersight_ip_pools" {
 #____________________________________________________________
 
 module "intersight_iqn_pools" {
-  source           = "scotttyso/pools-iqn/intersight"
+  source           = "terraform-cisco-modules/pools-iqn/intersight"
   version          = ">= 1.0.1"
   for_each         = { for ip in lookup(local.pools, "iqn_pools", []) : ip.name => ip if lookup(local.modules, "iqn_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -77,7 +77,7 @@ module "intersight_iqn_pools" {
 #____________________________________________________________
 
 module "intersight_mac_pools" {
-  source           = "scotttyso/pools-mac/intersight"
+  source           = "terraform-cisco-modules/pools-mac/intersight"
   version          = ">= 1.0.1"
   for_each         = { for mac in lookup(local.pools, "mac_pools", []) : mac.name => mac if lookup(local.modules, "mac_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -100,7 +100,7 @@ module "intersight_mac_pools" {
 #____________________________________________________________
 
 module "intersight_resource_pools" {
-  source             = "scotttyso/pools-resource/intersight"
+  source             = "terraform-cisco-modules/pools-resource/intersight"
   version            = ">= 1.0.1"
   for_each           = { for rp in lookup(local.pools, "resource_pools", []) : rp.name => rp if lookup(local.modules, "resource_pools", true) }
   assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -121,7 +121,7 @@ module "intersight_resource_pools" {
 #____________________________________________________________
 
 module "intersight_uuid_pools" {
-  source           = "scotttyso/pools-uuid/intersight"
+  source           = "terraform-cisco-modules/pools-uuid/intersight"
   version          = ">= 1.0.1"
   for_each         = { for uuid in lookup(local.pools, "uuid_pools", []) : uuid.name => uuid if lookup(local.modules, "uuid_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -144,7 +144,7 @@ module "intersight_uuid_pools" {
 #____________________________________________________________
 
 module "intersight_wwnn_pools" {
-  source           = "scotttyso/pools-fc/intersight"
+  source           = "terraform-cisco-modules/pools-fc/intersight"
   version          = ">= 1.0.1"
   for_each         = { for fc in lookup(local.pools, "wwnn_pools", []) : fc.name => fc if lookup(local.modules, "wwnn_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -161,7 +161,7 @@ module "intersight_wwnn_pools" {
 }
 
 module "intersight_wwpn_pools" {
-  source           = "scotttyso/pools-fc/intersight"
+  source           = "terraform-cisco-modules/pools-fc/intersight"
   version          = ">= 1.0.1"
   for_each         = { for fc in lookup(local.pools, "wwpn_pools", []) : fc.name => fc if lookup(local.modules, "wwpn_pools", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)

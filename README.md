@@ -19,13 +19,18 @@ No providers.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_apikey"></a> [apikey](#input\_apikey) | Intersight API Key. | `string` | n/a | yes |
-| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | Intersight URL. | `string` | `"https://intersight.com"` | no |
-| <a name="input_secretkey"></a> [secretkey](#input\_secretkey) | Intersight Secret Key. | `string` | n/a | yes |
 | <a name="input_model"></a> [model](#input\_model) | Model data. | `any` | n/a | yes |
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_ip_pools"></a> [ip\_pools](#output\_ip\_pools) | Moid of the IP Pools. |
+| <a name="output_iqn_pools"></a> [iqn\_pools](#output\_iqn\_pools) | Moid of the IQN Pools. |
+| <a name="output_mac_pools"></a> [mac\_pools](#output\_mac\_pools) | Moid of the MAC Pools. |
+| <a name="output_resource_pools"></a> [resource\_pools](#output\_resource\_pools) | Moid of the Resource Pools. |
+| <a name="output_uuid_pools"></a> [uuid\_pools](#output\_uuid\_pools) | Moid of the UUID Pools. |
+| <a name="output_wwnn_pools"></a> [wwnn\_pools](#output\_wwnn\_pools) | Moid of the WWNN Pools. |
+| <a name="output_wwpn_pools"></a> [wwpn\_pools](#output\_wwpn\_pools) | Moid of the WWPN Pools. |
 ## Resources
 
 No resources.

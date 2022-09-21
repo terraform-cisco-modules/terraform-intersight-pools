@@ -11,10 +11,10 @@ locals {
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-module "intersight_ip_pools" {
+module "ip_pools" {
   source           = "terraform-cisco-modules/pools-ip/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for ip in lookup(local.pools, "ip_pools", []) : ip.name => ip if lookup(local.modules, "ip_pools", true) }
+  for_each         = { for ip in lookup(local.pools, "ip_pools", []) : ip.name => ip if lookup(local.modules, "pools_ip", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   ipv4_blocks = [for block in lookup(each.value, "ipv4_blocks", []) : {
@@ -51,16 +51,16 @@ module "intersight_ip_pools" {
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-module "intersight_iqn_pools" {
+module "iqn_pools" {
   source           = "terraform-cisco-modules/pools-iqn/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for ip in lookup(local.pools, "iqn_pools", []) : ip.name => ip if lookup(local.modules, "iqn_pools", true) }
+  for_each         = { for ip in lookup(local.pools, "iqn_pools", []) : ip.name => ip if lookup(local.modules, "pools_iqn", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
-  iqn_suffix_blocks = [for block in lookup(each.value, "iqn_suffix_blocks", []) : {
+  iqn_blocks = [for block in lookup(each.value, "iqn_blocks", []) : {
     from   = block.from
     size   = lookup(block, "size", null)
-    suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn_pools.iqn_suffix_blocks.suffix)
+    suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn_pools.iqn_blocks.suffix)
     to     = lookup(block, "to", null)
   }]
   name         = "${each.value.name}${local.defaults.intersight.pools.iqn_pools.name_suffix}"
@@ -76,10 +76,10 @@ module "intersight_iqn_pools" {
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-module "intersight_mac_pools" {
+module "mac_pools" {
   source           = "terraform-cisco-modules/pools-mac/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for mac in lookup(local.pools, "mac_pools", []) : mac.name => mac if lookup(local.modules, "mac_pools", true) }
+  for_each         = { for mac in lookup(local.pools, "mac_pools", []) : mac.name => mac if lookup(local.modules, "pools_mac", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   mac_blocks = [for block in lookup(each.value, "mac_blocks", []) : {
@@ -99,10 +99,10 @@ module "intersight_mac_pools" {
 # GUI Location: Pools > Create Pool > Resource Pool
 #____________________________________________________________
 
-module "intersight_resource_pools" {
+module "resource_pools" {
   source             = "terraform-cisco-modules/pools-resource/intersight"
   version            = ">= 1.0.1"
-  for_each           = { for rp in lookup(local.pools, "resource_pools", []) : rp.name => rp if lookup(local.modules, "resource_pools", true) }
+  for_each           = { for rp in lookup(local.pools, "resource_pools", []) : rp.name => rp if lookup(local.modules, "pools_resource", true) }
   assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description        = lookup(each.value, "description", "")
   name               = "${each.value.name}${local.defaults.intersight.pools.resource_pools.name_suffix}"
@@ -120,10 +120,10 @@ module "intersight_resource_pools" {
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-module "intersight_uuid_pools" {
+module "uuid_pools" {
   source           = "terraform-cisco-modules/pools-uuid/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for uuid in lookup(local.pools, "uuid_pools", []) : uuid.name => uuid if lookup(local.modules, "uuid_pools", true) }
+  for_each         = { for uuid in lookup(local.pools, "uuid_pools", []) : uuid.name => uuid if lookup(local.modules, "pools_uuid", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   uuid_blocks = [for block in lookup(each.value, "uuid_blocks", []) : {
@@ -143,10 +143,10 @@ module "intersight_uuid_pools" {
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-module "intersight_wwnn_pools" {
+module "wwnn_pools" {
   source           = "terraform-cisco-modules/pools-fc/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for fc in lookup(local.pools, "wwnn_pools", []) : fc.name => fc if lookup(local.modules, "wwnn_pools", true) }
+  for_each         = { for fc in lookup(local.pools, "wwnn_pools", []) : fc.name => fc if lookup(local.modules, "pools_wwnn", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   id_blocks = [for block in lookup(each.value, "id_blocks", []) : {
@@ -160,10 +160,10 @@ module "intersight_wwnn_pools" {
   tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
-module "intersight_wwpn_pools" {
+module "wwpn_pools" {
   source           = "terraform-cisco-modules/pools-fc/intersight"
   version          = ">= 1.0.1"
-  for_each         = { for fc in lookup(local.pools, "wwpn_pools", []) : fc.name => fc if lookup(local.modules, "wwpn_pools", true) }
+  for_each         = { for fc in lookup(local.pools, "wwpn_pools", []) : fc.name => fc if lookup(local.modules, "pools_wwpn", true) }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   id_blocks = [for block in lookup(each.value, "id_blocks", []) : {

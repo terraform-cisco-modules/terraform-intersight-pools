@@ -12,10 +12,10 @@ locals {
 #____________________________________________________________
 
 module "ip" {
-  source           = "terraform-cisco-modules/pools-ip/intersight"
-  version          = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-ip/intersight"
+  version = ">= 1.0.2"
 
-  for_each         = {
+  for_each = {
     for ip in lookup(local.pools, "ip", []) : ip.name => ip if lookup(
       local.modules, "pools_ip", true
     )
@@ -57,10 +57,10 @@ module "ip" {
 #____________________________________________________________
 
 module "iqn" {
-  source           = "terraform-cisco-modules/pools-iqn/intersight"
-  version          = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-iqn/intersight"
+  version = ">= 1.0.2"
 
-  for_each         = {
+  for_each = {
     for ip in lookup(local.pools, "iqn", []) : ip.name => ip if lookup(
       local.modules, "pools_iqn", true
     )
@@ -87,10 +87,10 @@ module "iqn" {
 #____________________________________________________________
 
 module "mac" {
-  source           = "terraform-cisco-modules/pools-mac/intersight"
-  version          = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-mac/intersight"
+  version = ">= 1.0.2"
 
-  for_each         = {
+  for_each = {
     for mac in lookup(local.pools, "mac", []) : mac.name => mac if lookup(
       local.modules, "pools_mac", true
     )
@@ -115,10 +115,10 @@ module "mac" {
 #____________________________________________________________
 
 module "resource" {
-  source             = "terraform-cisco-modules/pools-resource/intersight"
-  version            = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-resource/intersight"
+  version = ">= 1.0.2"
 
-  for_each           = {
+  for_each = {
     for rp in lookup(local.pools, "resource", []) : rp.name => rp if lookup(
       local.modules, "pools_resource", true
     )
@@ -141,10 +141,10 @@ module "resource" {
 #____________________________________________________________
 
 module "uuid" {
-  source           = "terraform-cisco-modules/pools-uuid/intersight"
-  version          = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-uuid/intersight"
+  version = ">= 1.0.2"
 
-  for_each         = {
+  for_each = {
     for uuid in lookup(local.pools, "uuid", []) : uuid.name => uuid if lookup(
       local.modules, "pools_uuid", true
     )
@@ -169,10 +169,10 @@ module "uuid" {
 #____________________________________________________________
 
 module "wwnn" {
-  source           = "terraform-cisco-modules/pools-fc/intersight"
-  version          = ">= 1.0.1"
+  source  = "terraform-cisco-modules/pools-fc/intersight"
+  version = ">= 1.0.2"
 
-  for_each         = {
+  for_each = {
     for fc in lookup(local.pools, "wwnn", []) : fc.name => fc if lookup(
       local.modules, "pools_wwnn", true
     )
@@ -191,9 +191,9 @@ module "wwnn" {
 }
 
 module "wwpn" {
-  source           = "terraform-cisco-modules/pools-fc/intersight"
-  version          = ">= 1.0.1"
-  for_each         = {
+  source  = "terraform-cisco-modules/pools-fc/intersight"
+  version = ">= 1.0.2"
+  for_each = {
     for fc in lookup(local.pools, "wwpn", []) : fc.name => fc if lookup(
       local.modules, "pools_wwpn", true
     )

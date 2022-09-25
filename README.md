@@ -30,6 +30,7 @@ A comprehensive example using this module is available here: https://github.com/
 | <a name="output_ip"></a> [ip](#output\_ip) | Moid of the IP Pools. |
 | <a name="output_iqn"></a> [iqn](#output\_iqn) | Moid of the IQN Pools. |
 | <a name="output_mac"></a> [mac](#output\_mac) | Moid of the MAC Pools. |
+| <a name="output_orgs"></a> [orgs](#output\_orgs) | Moid of the Account Organizations. |
 | <a name="output_resource"></a> [resource](#output\_resource) | Moid of the Resource Pools. |
 | <a name="output_uuid"></a> [uuid](#output\_uuid) | Moid of the UUID Pools. |
 | <a name="output_wwnn"></a> [wwnn](#output\_wwnn) | Moid of the WWNN Pools. |

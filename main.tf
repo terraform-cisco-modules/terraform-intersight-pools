@@ -2,6 +2,7 @@ locals {
   defaults   = lookup(var.model, "defaults", {})
   modules    = lookup(var.model, "modules", {})
   intersight = lookup(var.model, "intersight", {})
+  orgs       = { for k, v in data.intersight_organization_organization.orgs.results : v.name => v.moid }
   pools      = lookup(local.intersight, "pools", {})
 }
 
@@ -16,7 +17,7 @@ data "intersight_organization_organization" "orgs" {
 
 module "ip" {
   source  = "terraform-cisco-modules/pools-ip/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for ip in lookup(local.pools, "ip", []) : ip.name => ip if lookup(
@@ -47,13 +48,9 @@ module "ip" {
     primary_dns   = lookup(config, "primary_dns", local.defaults.intersight.pools.ip.ipv6_config.primary_dns)
     secondary_dns = lookup(config, "secondary_dns", "::")
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.ip.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
-  tags = lookup(each.value, "tags", local.defaults.intersight.tags)
+  name         = "${each.value.name}${local.defaults.intersight.pools.ip.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
+  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 
@@ -65,7 +62,7 @@ module "ip" {
 
 module "iqn" {
   source  = "terraform-cisco-modules/pools-iqn/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for ip in lookup(local.pools, "iqn", []) : ip.name => ip if lookup(
@@ -80,14 +77,10 @@ module "iqn" {
     suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn.iqn_blocks.suffix)
     to     = lookup(block, "to", null)
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.iqn.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
-  prefix = lookup(each.value, "prefix", local.defaults.intersight.pools.iqn.prefix)
-  tags   = lookup(each.value, "tags", local.defaults.intersight.tags)
+  name         = "${each.value.name}${local.defaults.intersight.pools.iqn.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
+  prefix       = lookup(each.value, "prefix", local.defaults.intersight.pools.iqn.prefix)
+  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 
@@ -99,7 +92,7 @@ module "iqn" {
 
 module "mac" {
   source  = "terraform-cisco-modules/pools-mac/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for mac in lookup(local.pools, "mac", []) : mac.name => mac if lookup(
@@ -113,13 +106,9 @@ module "mac" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.mac.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
-  tags = lookup(each.value, "tags", local.defaults.intersight.tags)
+  name         = "${each.value.name}${local.defaults.intersight.pools.mac.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
+  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 
@@ -131,21 +120,17 @@ module "mac" {
 
 module "resource" {
   source  = "terraform-cisco-modules/pools-resource/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for rp in lookup(local.pools, "resource", []) : rp.name => rp if lookup(
       local.modules, "pools_resource", true
     )
   }
-  assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
-  description      = lookup(each.value, "description", "")
-  name             = "${each.value.name}${local.defaults.intersight.pools.resource.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
+  assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
+  description        = lookup(each.value, "description", "")
+  name               = "${each.value.name}${local.defaults.intersight.pools.resource.name_suffix}"
+  organization       = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
   pool_type          = lookup(each.value, "pool_type", local.defaults.intersight.pools.resource.pool_type)
   resource_type      = lookup(each.value, "resource_type", local.defaults.intersight.pools.resource.resource_type)
   serial_number_list = each.value.serial_number_list
@@ -161,7 +146,7 @@ module "resource" {
 
 module "uuid" {
   source  = "terraform-cisco-modules/pools-uuid/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for uuid in lookup(local.pools, "uuid", []) : uuid.name => uuid if lookup(
@@ -175,14 +160,10 @@ module "uuid" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.uuid.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
-  prefix = lookup(each.value, "prefix", local.defaults.intersight.pools.uuid.prefix)
-  tags   = lookup(each.value, "tags", local.defaults.intersight.tags)
+  name         = "${each.value.name}${local.defaults.intersight.pools.uuid.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
+  prefix       = lookup(each.value, "prefix", local.defaults.intersight.pools.uuid.prefix)
+  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 #____________________________________________________________
@@ -193,7 +174,7 @@ module "uuid" {
 
 module "wwnn" {
   source  = "terraform-cisco-modules/pools-fc/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
 
   for_each = {
     for fc in lookup(local.pools, "wwnn", []) : fc.name => fc if lookup(
@@ -207,19 +188,15 @@ module "wwnn" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
+  name         = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
   pool_purpose = lookup(each.value, "pool_purpose", "WWNN")
   tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 module "wwpn" {
   source  = "terraform-cisco-modules/pools-fc/intersight"
-  version = ">= 1.0.2"
+  version = ">= 1.0.3"
   for_each = {
     for fc in lookup(local.pools, "wwpn", []) : fc.name => fc if lookup(
       local.modules, "pools_wwpn", true
@@ -232,13 +209,8 @@ module "wwpn" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
-  organization = data.intersight_organization_organization.orgs.results[
-    index(data.intersight_organization_organization.orgs.*.name, lookup(
-      each.value, "organization", local.defaults.intersight.organization)
-    )
-  ].moid
+  name         = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+  organization = local.orgs[lookup(each.value, "organization", local.defaults.intersight.organization)]
   pool_purpose = lookup(each.value, "pool_purpose", "WWPN")
   tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
-

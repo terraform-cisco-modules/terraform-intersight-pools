@@ -19,6 +19,11 @@ output "mac" {
   ) : v => module.mac[v] } : {}
 }
 
+output "orgs" {
+  description = "Moid of the Account Organizations."
+  value       = local.orgs
+}
+
 output "resource" {
   description = "Moid of the Resource Pools."
   value = lookup(local.modules, "pools_resource", true) ? { for v in sort(
@@ -46,4 +51,3 @@ output "wwpn" {
     keys(module.wwpn)
   ) : v => module.wwpn[v] } : {}
 }
-

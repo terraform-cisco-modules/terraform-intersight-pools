@@ -15,7 +15,9 @@ A comprehensive example using this module is available here: https://github.com/
 | <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.32 |
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | >=1.0.32 |
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -34,5 +36,7 @@ No providers.
 | <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moid of the WWPN Pools. |
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [intersight_organization_organization.orgs](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/organization_organization) | data source |
 <!-- END_TF_DOCS -->

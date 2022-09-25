@@ -80,14 +80,14 @@ module "iqn" {
     suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn.iqn_blocks.suffix)
     to     = lookup(block, "to", null)
   }]
-  name         = "${each.value.name}${local.defaults.intersight.pools.iqn.name_suffix}"
+  name = "${each.value.name}${local.defaults.intersight.pools.iqn.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)
     )
   ].moid
-  prefix       = lookup(each.value, "prefix", local.defaults.intersight.pools.iqn.prefix)
-  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
+  prefix = lookup(each.value, "prefix", local.defaults.intersight.pools.iqn.prefix)
+  tags   = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 
@@ -113,13 +113,13 @@ module "mac" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name         = "${each.value.name}${local.defaults.intersight.pools.mac.name_suffix}"
+  name = "${each.value.name}${local.defaults.intersight.pools.mac.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)
     )
   ].moid
-  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
+  tags = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 
@@ -138,9 +138,9 @@ module "resource" {
       local.modules, "pools_resource", true
     )
   }
-  assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
-  description        = lookup(each.value, "description", "")
-  name               = "${each.value.name}${local.defaults.intersight.pools.resource.name_suffix}"
+  assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
+  description      = lookup(each.value, "description", "")
+  name             = "${each.value.name}${local.defaults.intersight.pools.resource.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)
@@ -175,14 +175,14 @@ module "uuid" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name         = "${each.value.name}${local.defaults.intersight.pools.uuid.name_suffix}"
+  name = "${each.value.name}${local.defaults.intersight.pools.uuid.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)
     )
   ].moid
-  prefix       = lookup(each.value, "prefix", local.defaults.intersight.pools.uuid.prefix)
-  tags         = lookup(each.value, "tags", local.defaults.intersight.tags)
+  prefix = lookup(each.value, "prefix", local.defaults.intersight.pools.uuid.prefix)
+  tags   = lookup(each.value, "tags", local.defaults.intersight.tags)
 }
 
 #____________________________________________________________
@@ -207,7 +207,7 @@ module "wwnn" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name         = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+  name = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)
@@ -232,7 +232,7 @@ module "wwpn" {
     size = lookup(block, "size", null)
     to   = lookup(block, "to", null)
   }]
-  name         = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+  name = "${each.value.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
   organization = data.intersight_organization_organization.orgs.results[
     index(data.intersight_organization_organization.orgs.*.name, lookup(
       each.value, "organization", local.defaults.intersight.organization)

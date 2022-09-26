@@ -21,7 +21,7 @@ module "ip" {
 
   for_each = {
     for ip in lookup(local.pools, "ip", []) : ip.name => ip if lookup(
-      local.modules, "pools_ip", true
+      local.modules.pools, "ip", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -66,7 +66,7 @@ module "iqn" {
 
   for_each = {
     for ip in lookup(local.pools, "iqn", []) : ip.name => ip if lookup(
-      local.modules, "pools_iqn", true
+      local.modules.pools, "iqn", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -96,7 +96,7 @@ module "mac" {
 
   for_each = {
     for mac in lookup(local.pools, "mac", []) : mac.name => mac if lookup(
-      local.modules, "pools_mac", true
+      local.modules.pools, "mac", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -124,7 +124,7 @@ module "resource" {
 
   for_each = {
     for rp in lookup(local.pools, "resource", []) : rp.name => rp if lookup(
-      local.modules, "pools_resource", true
+      local.modules.pools, "resource", true
     )
   }
   assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -150,7 +150,7 @@ module "uuid" {
 
   for_each = {
     for uuid in lookup(local.pools, "uuid", []) : uuid.name => uuid if lookup(
-      local.modules, "pools_uuid", true
+      local.modules.pools, "uuid", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -178,7 +178,7 @@ module "wwnn" {
 
   for_each = {
     for fc in lookup(local.pools, "wwnn", []) : fc.name => fc if lookup(
-      local.modules, "pools_wwnn", true
+      local.modules.pools, "wwnn", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
@@ -199,7 +199,7 @@ module "wwpn" {
   version = ">= 1.0.3"
   for_each = {
     for fc in lookup(local.pools, "wwpn", []) : fc.name => fc if lookup(
-      local.modules, "pools_wwpn", true
+      local.modules.pools, "wwpn", true
     )
   }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)

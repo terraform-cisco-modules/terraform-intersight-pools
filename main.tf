@@ -1,6 +1,5 @@
 locals {
   defaults   = lookup(var.model, "defaults", {})
-  modules    = lookup(var.model, "modules", {})
   intersight = lookup(var.model, "intersight", {})
   orgs       = { for k, v in data.intersight_organization_organization.orgs.results : v.name => v.moid }
   pools      = lookup(local.intersight, "pools", {})
@@ -17,13 +16,9 @@ data "intersight_organization_organization" "orgs" {
 
 module "ip" {
   source  = "terraform-cisco-modules/pools-ip/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for ip in lookup(local.pools, "ip", []) : ip.name => ip if lookup(
-      local.modules.pools, "ip", true
-    )
-  }
+  for_each         = { for ip in lookup(local.pools, "ip", []) : ip.name => ip }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   ipv4_blocks = [for block in lookup(each.value, "ipv4_blocks", []) : {
@@ -62,13 +57,9 @@ module "ip" {
 
 module "iqn" {
   source  = "terraform-cisco-modules/pools-iqn/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for ip in lookup(local.pools, "iqn", []) : ip.name => ip if lookup(
-      local.modules.pools, "iqn", true
-    )
-  }
+  for_each         = { for ip in lookup(local.pools, "iqn", []) : ip.name => ip }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   iqn_blocks = [for block in lookup(each.value, "iqn_blocks", []) : {
@@ -92,13 +83,9 @@ module "iqn" {
 
 module "mac" {
   source  = "terraform-cisco-modules/pools-mac/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for mac in lookup(local.pools, "mac", []) : mac.name => mac if lookup(
-      local.modules.pools, "mac", true
-    )
-  }
+  for_each         = { for mac in lookup(local.pools, "mac", []) : mac.name => mac }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   mac_blocks = [for block in lookup(each.value, "mac_blocks", []) : {
@@ -120,13 +107,9 @@ module "mac" {
 
 module "resource" {
   source  = "terraform-cisco-modules/pools-resource/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for rp in lookup(local.pools, "resource", []) : rp.name => rp if lookup(
-      local.modules.pools, "resource", true
-    )
-  }
+  for_each           = { for rp in lookup(local.pools, "resource", []) : rp.name => rp }
   assignment_order   = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description        = lookup(each.value, "description", "")
   name               = "${each.value.name}${local.defaults.intersight.pools.resource.name_suffix}"
@@ -146,13 +129,9 @@ module "resource" {
 
 module "uuid" {
   source  = "terraform-cisco-modules/pools-uuid/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for uuid in lookup(local.pools, "uuid", []) : uuid.name => uuid if lookup(
-      local.modules.pools, "uuid", true
-    )
-  }
+  for_each         = { for uuid in lookup(local.pools, "uuid", []) : uuid.name => uuid }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   uuid_blocks = [for block in lookup(each.value, "uuid_blocks", []) : {
@@ -174,13 +153,9 @@ module "uuid" {
 
 module "wwnn" {
   source  = "terraform-cisco-modules/pools-fc/intersight"
-  version = ">= 1.0.3"
+  version = ">= 1.0.4"
 
-  for_each = {
-    for fc in lookup(local.pools, "wwnn", []) : fc.name => fc if lookup(
-      local.modules.pools, "wwnn", true
-    )
-  }
+  for_each         = { for fc in lookup(local.pools, "wwnn", []) : fc.name => fc }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   id_blocks = [for block in lookup(each.value, "id_blocks", []) : {
@@ -195,13 +170,9 @@ module "wwnn" {
 }
 
 module "wwpn" {
-  source  = "terraform-cisco-modules/pools-fc/intersight"
-  version = ">= 1.0.3"
-  for_each = {
-    for fc in lookup(local.pools, "wwpn", []) : fc.name => fc if lookup(
-      local.modules.pools, "wwpn", true
-    )
-  }
+  source           = "terraform-cisco-modules/pools-fc/intersight"
+  version          = ">= 1.0.4"
+  for_each         = { for fc in lookup(local.pools, "wwpn", []) : fc.name => fc }
   assignment_order = lookup(each.value, "assignment_order", local.defaults.intersight.pools.assignment_order)
   description      = lookup(each.value, "description", "")
   id_blocks = [for block in lookup(each.value, "id_blocks", []) : {

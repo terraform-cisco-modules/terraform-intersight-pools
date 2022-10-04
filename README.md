@@ -21,11 +21,6 @@ A Terraform module to configure Intersight Pools.
 | Name | Version |
 |------|---------|
 | <a name="provider_intersight"></a> [intersight](#provider\_intersight) | >=1.0.32 |
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_model"></a> [model](#input\_model) | Model data. | `any` | n/a | yes |
 ## Modules
 
 | Name | Source | Version |
@@ -37,6 +32,11 @@ A Terraform module to configure Intersight Pools.
 | <a name="module_uuid"></a> [uuid](#module\_uuid) | terraform-cisco-modules/pools-uuid/intersight | >= 1.0.5 |
 | <a name="module_wwnn"></a> [wwnn](#module\_wwnn) | terraform-cisco-modules/pools-fc/intersight | >= 1.0.5 |
 | <a name="module_wwpn"></a> [wwpn](#module\_wwpn) | terraform-cisco-modules/pools-fc/intersight | >= 1.0.5 |
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_model"></a> [model](#input\_model) | Model data. | `any` | n/a | yes |
 ## Outputs
 
 | Name | Description |

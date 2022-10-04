@@ -41,14 +41,14 @@ A Terraform module to configure Intersight Pools.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ip"></a> [ip](#output\_ip) | Moid of the IP Pools. |
-| <a name="output_iqn"></a> [iqn](#output\_iqn) | Moid of the IQN Pools. |
-| <a name="output_mac"></a> [mac](#output\_mac) | Moid of the MAC Pools. |
-| <a name="output_orgs"></a> [orgs](#output\_orgs) | Moid of the Account Organizations. |
-| <a name="output_resource"></a> [resource](#output\_resource) | Moid of the Resource Pools. |
-| <a name="output_uuid"></a> [uuid](#output\_uuid) | Moid of the UUID Pools. |
-| <a name="output_wwnn"></a> [wwnn](#output\_wwnn) | Moid of the WWNN Pools. |
-| <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moid of the WWPN Pools. |
+| <a name="output_ip"></a> [ip](#output\_ip) | Moids of the IP Pools. |
+| <a name="output_iqn"></a> [iqn](#output\_iqn) | Moids of the IQN Pools. |
+| <a name="output_mac"></a> [mac](#output\_mac) | Moids of the MAC Pools. |
+| <a name="output_orgs"></a> [orgs](#output\_orgs) | Moids of the Account Organizations. |
+| <a name="output_resource"></a> [resource](#output\_resource) | Moids of the Resource Pools. |
+| <a name="output_uuid"></a> [uuid](#output\_uuid) | Moids of the UUID Pools. |
+| <a name="output_wwnn"></a> [wwnn](#output\_wwnn) | Moids of the WWNN Pools. |
+| <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moids of the WWPN Pools. |
 ## Resources
 
 | Name | Type |

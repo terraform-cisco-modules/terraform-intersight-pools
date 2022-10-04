@@ -17,6 +17,7 @@ content: |-
   {{ .Requirements }}
   {{ .Providers }}
   {{ .Inputs }}
+  {{ .Modules }}
   {{ .Outputs }}
   {{ .Resources }}
 output:

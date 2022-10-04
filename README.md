@@ -26,6 +26,17 @@ A Terraform module to configure Intersight Pools.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_model"></a> [model](#input\_model) | Model data. | `any` | n/a | yes |
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_ip"></a> [ip](#module\_ip) | terraform-cisco-modules/pools-ip/intersight | >= 1.0.5 |
+| <a name="module_iqn"></a> [iqn](#module\_iqn) | terraform-cisco-modules/pools-iqn/intersight | >= 1.0.5 |
+| <a name="module_mac"></a> [mac](#module\_mac) | terraform-cisco-modules/pools-mac/intersight | >= 1.0.5 |
+| <a name="module_resource"></a> [resource](#module\_resource) | terraform-cisco-modules/pools-resource/intersight | >= 1.0.5 |
+| <a name="module_uuid"></a> [uuid](#module\_uuid) | terraform-cisco-modules/pools-uuid/intersight | >= 1.0.5 |
+| <a name="module_wwnn"></a> [wwnn](#module\_wwnn) | terraform-cisco-modules/pools-fc/intersight | >= 1.0.5 |
+| <a name="module_wwpn"></a> [wwpn](#module\_wwpn) | terraform-cisco-modules/pools-fc/intersight | >= 1.0.5 |
 ## Outputs
 
 | Name | Description |

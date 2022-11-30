@@ -1,0 +1,170 @@
+locals {
+  defaults   = lookup(var.model, "defaults", {})
+  intersight = lookup(var.model, "intersight", {})
+  orgs       = { for k, v in data.intersight_organization_organization.orgs.results : v.name => v.moid }
+  pools      = lookup(local.intersight, "pools", {})
+
+  #____________________________________________________________
+  #
+  # Intersight IP Pool
+  # GUI Location: Pools > Create Pool: IP
+  #____________________________________________________________
+  ip = {
+    for v in lookup(local.pools, "ip", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      ipv4_blocks = [for block in lookup(v, "ipv4_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      ipv4_config = [for config in lookup(v, "ipv4_config", []) : {
+        gateway       = config.gateway
+        netmask       = config.netmask
+        primary_dns   = lookup(config, "primary_dns", local.defaults.intersight.pools.ip.ipv4_config.primary_dns)
+        secondary_dns = lookup(config, "secondary_dns", null)
+      }]
+      ipv6_blocks = [for block in lookup(v, "ipv6_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      ipv6_config = [for config in lookup(v, "ipv6_config", []) : {
+        gateway       = config.gateway
+        prefix        = config.prefix
+        primary_dns   = lookup(config, "primary_dns", local.defaults.intersight.pools.ip.ipv6_config.primary_dns)
+        secondary_dns = lookup(config, "secondary_dns", "::")
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.ip.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+  #____________________________________________________________
+  #
+  # Intersight IQN Pool
+  # GUI Location: Pools > Create Pool: IQN
+  #____________________________________________________________
+  iqn = {
+    for v in lookup(local.pools, "iqn", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      iqn_blocks = [for block in lookup(v, "iqn_blocks", []) : {
+        from   = block.from
+        size   = lookup(block, "size", null)
+        suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn.iqn_blocks.suffix)
+        to     = lookup(block, "to", null)
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.iqn.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      prefix       = lookup(v, "prefix", local.defaults.intersight.pools.iqn.prefix)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+  #____________________________________________________________
+  #
+  # Intersight MAC Pool
+  # GUI Location: Pools > Create Pool: MAC
+  #____________________________________________________________
+  mac = {
+    for v in lookup(local.pools, "mac", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      mac_blocks = [for block in lookup(v, "mac_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.mac.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+  #____________________________________________________________
+  #
+  # Intersight Resource Pool
+  # GUI Location: Pools > Create Pool: Resource
+  #____________________________________________________________
+  resource = {
+    for v in lookup(local.pools, "resource", {}) : v.name => {
+      assignment_order   = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description        = lookup(v, "description", "")
+      name               = "${v.name}${local.defaults.intersight.pools.resource.name_suffix}"
+      organization       = lookup(v, "organization", var.organization)
+      pool_type          = lookup(v, "pool_type", local.defaults.intersight.pools.resource.pool_type)
+      resource_type      = lookup(v, "resource_type", local.defaults.intersight.pools.resource.resource_type)
+      serial_number_list = v.serial_number_list
+      server_type        = lookup(v, "server_type", local.defaults.intersight.pools.resource.server_type)
+      tags               = lookup(v, "tags", var.tags)
+    }
+  }
+  serial_number_list = compact(concat([for v in local.resource : v.serial_number_list]))
+
+  #____________________________________________________________
+  #
+  # Intersight UUID Pool
+  # GUI Location: Pools > Create Pool: UUID
+  #____________________________________________________________
+  uuid = {
+    for v in lookup(local.pools, "uuid", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      uuid_blocks = [for block in lookup(v, "uuid_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.uuid.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      prefix       = lookup(v, "prefix", local.defaults.intersight.pools.uuid.prefix)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+
+  #____________________________________________________________
+  #
+  # Intersight WWNN Pool
+  # GUI Location: Pools > Create Pool: WWNN
+  #____________________________________________________________
+  wwnn = {
+    for v in lookup(local.pools, "wwnn", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      id_blocks = [for block in lookup(v, "id_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+
+  #____________________________________________________________
+  #
+  # Intersight WWPN Pool
+  # GUI Location: Pools > Create Pool: WWPN
+  #____________________________________________________________
+  wwpn = {
+    for v in lookup(local.pools, "wwpn", {}) : v.name => {
+      assignment_order = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
+      description      = lookup(v, "description", "")
+      id_blocks = [for block in lookup(v, "id_blocks", []) : {
+        from = block.from
+        size = lookup(block, "size", null)
+        to   = lookup(block, "to", null)
+      }]
+      name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+      organization = lookup(v, "organization", var.organization)
+      tags         = lookup(v, "tags", var.tags)
+    }
+  }
+
+}
+

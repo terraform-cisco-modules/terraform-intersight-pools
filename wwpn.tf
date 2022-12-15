@@ -31,3 +31,17 @@ resource "intersight_fcpool_pool" "wwpn" {
     }
   }
 }
+
+resource "intersight_fcpool_reservation" "wwpn" {
+  for_each        = local.wwpn_reservations
+  allocation_type = each.value.allocation_type # dynamic|static
+  identity        = each.value.identity
+  id_purpose      = "WWPN"
+  organization {
+    moid        = local.orgs[each.value.organization]
+    object_type = "organization.Organization"
+  }
+  pool {
+    moid = intersight_fcpool_pool.wwpn[each.value.pool_name].moid
+  }
+}

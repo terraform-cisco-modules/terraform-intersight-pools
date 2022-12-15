@@ -55,3 +55,17 @@ resource "intersight_ippool_pool" "ip" {
     }
   }
 }
+
+resource "intersight_ippool_reservation" "ip" {
+  for_each        = local.ip_reservations
+  allocation_type = each.value.allocation_type # dynamic|static
+  identity        = each.value.identity
+  ip_type         = each.value.ip_type
+  organization {
+    moid        = local.orgs[each.value.organization]
+    object_type = "organization.Organization"
+  }
+  pool {
+    moid = intersight_ippool_pool.ip[each.value.pool_name].moid
+  }
+}

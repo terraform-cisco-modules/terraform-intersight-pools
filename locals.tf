@@ -36,10 +36,24 @@ locals {
         secondary_dns = lookup(config, "secondary_dns", "::")
       }]
       name         = "${v.name}${local.defaults.intersight.pools.ip.name_suffix}"
+      reservations = lookup(v, "reservations", [])
       organization = lookup(v, "organization", var.organization)
       tags         = lookup(v, "tags", var.tags)
     }
   }
+  ip_reservations = { for i in flatten([
+    for value in local.ip : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          ip_type         = lookup(v, "ip_type", "IPv4")
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 
   #____________________________________________________________
   #
@@ -59,9 +73,22 @@ locals {
       name         = "${v.name}${local.defaults.intersight.pools.iqn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       prefix       = lookup(v, "prefix", local.defaults.intersight.pools.iqn.prefix)
+      reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
+  iqn_reservations = { for i in flatten([
+    for value in local.iqn : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 
   #____________________________________________________________
   #
@@ -79,9 +106,22 @@ locals {
       }]
       name         = "${v.name}${local.defaults.intersight.pools.mac.name_suffix}"
       organization = lookup(v, "organization", var.organization)
+      reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
+  mac_reservations = { for i in flatten([
+    for value in local.mac : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 
   #____________________________________________________________
   #
@@ -120,9 +160,22 @@ locals {
       name         = "${v.name}${local.defaults.intersight.pools.uuid.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       prefix       = lookup(v, "prefix", local.defaults.intersight.pools.uuid.prefix)
+      reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
+  uuid_reservations = { for i in flatten([
+    for value in local.uuid : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 
 
   #____________________________________________________________
@@ -141,9 +194,22 @@ locals {
       }]
       name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
+      reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
+  wwnn_reservations = { for i in flatten([
+    for value in local.wwnn : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 
 
   #____________________________________________________________
@@ -162,9 +228,21 @@ locals {
       }]
       name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
+      reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
-
+  wwpn_reservations = { for i in flatten([
+    for value in local.wwpn : [
+      for v in value.reservations : [
+        for s in s.identities : {
+          allocation_type = lookup(v, "allocation_type", "static")
+          identity        = s
+          organization    = value.organization
+          pool_name       = value.name
+        }
+      ]
+    ] if length(value.reservations) > 0
+  ]) : "${i.pool}:${i.identity}" => i }
 }
 

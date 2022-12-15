@@ -31,3 +31,16 @@ resource "intersight_iqnpool_pool" "iqn" {
     }
   }
 }
+
+resource "intersight_iqnpool_reservation" "iqn" {
+  for_each        = local.mac_reservations
+  allocation_type = each.value.allocation_type # dynamic|static
+  identity        = each.value.identity
+  organization {
+    moid        = local.orgs[each.value.organization]
+    object_type = "organization.Organization"
+  }
+  pool {
+    moid = intersight_iqnpool_pool.iqn[each.value.pool_name].moid
+  }
+}

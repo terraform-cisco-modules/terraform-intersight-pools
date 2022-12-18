@@ -35,7 +35,7 @@ locals {
         primary_dns   = lookup(config, "primary_dns", local.defaults.intersight.pools.ip.ipv6_config.primary_dns)
         secondary_dns = lookup(config, "secondary_dns", "::")
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.ip.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.ip.name_suffix}"
       reservations = lookup(v, "reservations", [])
       organization = lookup(v, "organization", var.organization)
       tags         = lookup(v, "tags", var.tags)
@@ -44,7 +44,7 @@ locals {
   ip_reservations = { for i in flatten([
     for value in local.ip : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           ip_type         = lookup(v, "ip_type", "IPv4")
@@ -70,7 +70,7 @@ locals {
         suffix = lookup(block, "suffix", local.defaults.intersight.pools.iqn.iqn_blocks.suffix)
         to     = lookup(block, "to", null)
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.iqn.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.iqn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       prefix       = lookup(v, "prefix", local.defaults.intersight.pools.iqn.prefix)
       reservations = lookup(v, "reservations", [])
@@ -80,7 +80,7 @@ locals {
   iqn_reservations = { for i in flatten([
     for value in local.iqn : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           organization    = value.organization
@@ -104,7 +104,7 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.mac.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.mac.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
@@ -113,7 +113,7 @@ locals {
   mac_reservations = { for i in flatten([
     for value in local.mac : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           organization    = value.organization
@@ -132,7 +132,7 @@ locals {
     for v in lookup(local.pools, "resource", {}) : v.name => {
       assignment_order   = lookup(v, "assignment_order", local.defaults.intersight.pools.assignment_order)
       description        = lookup(v, "description", "")
-      name               = "${v.name}${local.defaults.intersight.pools.resource.name_suffix}"
+      name               = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.resource.name_suffix}"
       organization       = lookup(v, "organization", var.organization)
       pool_type          = lookup(v, "pool_type", local.defaults.intersight.pools.resource.pool_type)
       resource_type      = lookup(v, "resource_type", local.defaults.intersight.pools.resource.resource_type)
@@ -157,7 +157,7 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.uuid.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.uuid.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       prefix       = lookup(v, "prefix", local.defaults.intersight.pools.uuid.prefix)
       reservations = lookup(v, "reservations", [])
@@ -167,7 +167,7 @@ locals {
   uuid_reservations = { for i in flatten([
     for value in local.uuid : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           organization    = value.organization
@@ -192,7 +192,7 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
@@ -201,7 +201,7 @@ locals {
   wwnn_reservations = { for i in flatten([
     for value in local.wwnn : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           organization    = value.organization
@@ -226,7 +226,7 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
+      name         = "${local.defaults.intersight.pools.name_prefix}${v.name}${local.defaults.intersight.pools.wwnn.name_suffix}"
       organization = lookup(v, "organization", var.organization)
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
@@ -235,7 +235,7 @@ locals {
   wwpn_reservations = { for i in flatten([
     for value in local.wwpn : [
       for v in value.reservations : [
-        for s in s.identities : {
+        for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", "static")
           identity        = s
           organization    = value.organization

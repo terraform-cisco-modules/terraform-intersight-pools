@@ -40,11 +40,6 @@ output "mac_reservations" {
   ) : v => intersight_macpool_reservation.mac[v].moid } : {}
 }
 
-output "orgs" {
-  description = "Moids of the Account Organizations."
-  value       = local.orgs
-}
-
 output "resource" {
   description = "Moids of the Resource Pools."
   value = length(local.resource) > 0 ? { for v in sort(

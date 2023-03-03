@@ -1,5 +1,5 @@
-variable "model" {
-  description = "Model data."
+variable "defaults" {
+  description = "Map of Defaults for Pools."
   type        = any
 }
 
@@ -7,6 +7,11 @@ variable "organization" {
   default     = "default"
   description = "Name of the default intersight Organization."
   type        = string
+}
+
+variable "pools" {
+  description = "Pools - YAML to HCL Data."
+  type        = any
 }
 
 variable "tags" {

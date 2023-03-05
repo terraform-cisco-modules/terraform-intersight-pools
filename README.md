@@ -31,8 +31,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_model"></a> [model](#input\_model) | Model data. | `any` | n/a | yes |
+| <a name="input_defaults"></a> [defaults](#input\_defaults) | Map of Defaults for Pools. | `any` | n/a | yes |
 | <a name="input_organization"></a> [organization](#input\_organization) | Name of the default intersight Organization. | `string` | `"default"` | no |
+| <a name="input_pools"></a> [pools](#input\_pools) | Pools - YAML to HCL Data. | `any` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | List of Key/Value Pairs to Assign as Attributes to the Policy. | `list(map(string))` | `[]` | no |
 ## Outputs
 
@@ -44,7 +45,6 @@ No modules.
 | <a name="output_iqn_reservations"></a> [iqn\_reservations](#output\_iqn\_reservations) | Moids of the IQN Pool Reservations. |
 | <a name="output_mac"></a> [mac](#output\_mac) | Moids of the MAC Pools. |
 | <a name="output_mac_reservations"></a> [mac\_reservations](#output\_mac\_reservations) | Moids of the MAC Pool Reservations. |
-| <a name="output_orgs"></a> [orgs](#output\_orgs) | Moids of the Account Organizations. |
 | <a name="output_resource"></a> [resource](#output\_resource) | Moids of the Resource Pools. |
 | <a name="output_uuid"></a> [uuid](#output\_uuid) | Moids of the UUID Pools. |
 | <a name="output_uuid_reservations"></a> [uuid\_reservations](#output\_uuid\_reservations) | Moids of the UUID Pool Reservations. |

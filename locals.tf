@@ -1,7 +1,7 @@
 locals {
-  defaults   = var.defaults
-  orgs       = { for k, v in data.intersight_organization_organization.orgs.results : v.name => v.moid }
-  pools      = var.pools
+  defaults = var.defaults
+  orgs     = var.orgs
+  pools    = var.pools
 
   #____________________________________________________________
   #
@@ -17,10 +17,10 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      ipv4_config = [for config in lookup(v, "ipv4_config", []) : {
+      ipv4_config = [for config in lookup(v, "ipv4_configuration", []) : {
         gateway       = config.gateway
         netmask       = config.netmask
-        primary_dns   = lookup(config, "primary_dns", local.defaults.ip.ipv4_config.primary_dns)
+        primary_dns   = lookup(config, "primary_dns", local.defaults.ip.ipv4_configuration.primary_dns)
         secondary_dns = lookup(config, "secondary_dns", null)
       }]
       ipv6_blocks = [for block in lookup(v, "ipv6_blocks", []) : {
@@ -28,10 +28,10 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      ipv6_config = [for config in lookup(v, "ipv6_config", []) : {
+      ipv6_config = [for config in lookup(v, "ipv6_configuration", []) : {
         gateway       = config.gateway
         prefix        = config.prefix
-        primary_dns   = lookup(config, "primary_dns", local.defaults.ip.ipv6_config.primary_dns)
+        primary_dns   = lookup(config, "primary_dns", local.defaults.ip.ipv4_configuration.primary_dns)
         secondary_dns = lookup(config, "secondary_dns", "::")
       }]
       name         = "${local.defaults.name_prefix}${v.name}${local.defaults.ip.name_suffix}"

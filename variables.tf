@@ -9,6 +9,11 @@ variable "organization" {
   type        = string
 }
 
+variable "orgs" {
+  description = "Input orgs List."
+  type        = any
+}
+
 variable "pools" {
   description = "Pools - YAML to HCL Data."
   type        = any

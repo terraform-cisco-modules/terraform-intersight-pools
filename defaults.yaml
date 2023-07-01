@@ -1,0 +1,97 @@
+---
+intersight:
+  defaults:
+    pools:
+      ip:
+        assignment_order: 'sequential'
+        description: ''
+        ipv4_block:
+          from: '**REQUIRED**'
+          size: 240 # Must define either size or to, but only define one
+          to: ''
+        ipv4_configuration:
+          gateway: '**REQUIRED**'
+          netmask: '**REQUIRED**'
+          primary_dns: '208.67.220.220' # 208.67.220.220
+          secondary_dns: ''
+        ipv6_block:
+          from: '**REQUIRED**'
+          size: 1024 # Must define either size or to, but only define one
+          to: ''
+        ipv6_configuration: # REQUIRED Settings for IPv6 Pools
+          gateway: '**REQUIRED**'
+          prefix: '**REQUIRED**'
+          primary_dns: '2620:119:53::53' # 2620:119:53::53
+          secondary_dns: '::'
+        name: '**REQUIRED**'
+        name_suffix: ''
+        reservations:
+          allocation_type: static
+          ip_type: IPv4
+          identities: [] # Required
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''
+      iqn:
+        assignment_order: 'sequential'
+        description: ''
+        name: '**REQUIRED**'
+        name_suffix: ''
+        iqn_blocks:
+          from: '**REQUIRED**'
+          size: 1024  # Must define either size or to, but only define one
+          suffix: ucs-host
+          to: 0
+        prefix: ''
+        reservations:
+          allocation_type: static
+          identities: [] # Required
+      mac:
+        assignment_order: 'sequential'
+        description: ''
+        mac_blocks:
+          from: '**REQUIRED**'
+          size: 1024  # Must define either size or to, but only define one
+          to: 0
+        name: '**REQUIRED**'
+        name_suffix: ''
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''
+      name_prefix: ''
+      resource:
+        assignment_order: 'sequential'
+        description: ''
+        name: '**REQUIRED**'
+        name_suffix: ''
+        pool_type: Static
+        resource_type: Server
+        server_type: Blades
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''
+      uuid:
+        assignment_order: 'sequential'
+        description: ''
+        name: '**REQUIRED**'
+        name_suffix: ''
+        prefix: 000025B5-0000-0000
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''
+      wwnn:
+        assignment_order: 'sequential'
+        description: ''
+        name: '**REQUIRED**'
+        name_suffix: ''
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''
+      wwpn:
+        assignment_order: 'sequential'
+        description: ''
+        name: '**REQUIRED**'
+        name_suffix: ''
+        tags: # Optional List of Map of String
+          key: ''
+          value: ''

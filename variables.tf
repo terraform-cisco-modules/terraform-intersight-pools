@@ -1,8 +1,3 @@
-variable "defaults" {
-  description = "Map of Defaults for Pools."
-  type        = any
-}
-
 variable "organization" {
   default     = "default"
   description = "Name of the default intersight Organization."

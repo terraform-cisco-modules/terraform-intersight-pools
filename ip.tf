@@ -18,7 +18,7 @@ resource "intersight_ippool_pool" "ip" {
     }
   }
   dynamic "ip_v4_config" {
-    for_each = each.value.ipv4_config
+    for_each = { for v in each.value.ipv4_config : "default" => v if v.gateway != null }
     content {
       gateway       = ip_v4_config.value.gateway
       netmask       = ip_v4_config.value.netmask
@@ -35,7 +35,7 @@ resource "intersight_ippool_pool" "ip" {
     }
   }
   dynamic "ip_v6_config" {
-    for_each = each.value.ipv6_config
+    for_each = { for v in each.value.ipv6_config : "default" => v if v.gateway != null }
     content {
       gateway       = ip_v6_config.value.gateway
       prefix        = ip_v6_config.value.prefix

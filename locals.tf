@@ -1,10 +1,28 @@
 locals {
-  defaults = yamldecode(file("${path.module}/defaults.yaml")).intersight.defaults.pools
+  defaults = yamldecode(file("${path.module}/defaults.yaml")).pools
   ipv4_cfg = local.lip.ipv4_configuration
   ipv6_cfg = local.lip.ipv6_configuration
   lip      = local.defaults.ip
-  orgs     = var.orgs
-  pools    = var.pools
+  name_prefix = [for v in [merge(lookup(local.pools, "name_prefix", {}), local.defaults.name_prefix)] : {
+    ip       = v.ip != "" ? v.ip : v.default
+    iqn      = v.iqn != "" ? v.iqn : v.default
+    mac      = v.mac != "" ? v.mac : v.default
+    resource = v.resource != "" ? v.resource : v.default
+    uuid     = v.uuid != "" ? v.uuid : v.default
+    wwnn     = v.wwnn != "" ? v.wwnn : v.default
+    wwpn     = v.wwpn != "" ? v.wwpn : v.default
+  }][0]
+  name_suffix = [for v in [merge(lookup(local.pools, "name_suffix", {}), local.defaults.name_suffix)] : {
+    ip       = v.ip != "" ? v.ip : v.default
+    iqn      = v.iqn != "" ? v.iqn : v.default
+    mac      = v.mac != "" ? v.mac : v.default
+    resource = v.resource != "" ? v.resource : v.default
+    uuid     = v.uuid != "" ? v.uuid : v.default
+    wwnn     = v.wwnn != "" ? v.wwnn : v.default
+    wwpn     = v.wwpn != "" ? v.wwpn : v.default
+  }][0]
+  orgs  = var.orgs
+  pools = var.pools
 
   #____________________________________________________________
   #
@@ -37,21 +55,21 @@ locals {
         primary_dns   = lookup(e, "primary_dns", local.ipv6_cfg.primary_dns)
         secondary_dns = lookup(e, "secondary_dns", local.ipv6_cfg.secondary_dns)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.ip.name_suffix}"
+      name         = "${local.name_prefix.ip}${v.name}${local.name_suffix.ip}"
       reservations = lookup(v, "reservations", [])
       organization = var.organization
       tags         = lookup(v, "tags", var.tags)
     }
   }
   ip_reservations = { for i in flatten([
-    for value in local.ip : [
+    for key, value in local.ip : [
       for v in value.reservations : [
         for e in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.ip.reservations.allocation_type)
           identity        = e
           ip_type         = lookup(v, "ip_type", local.defaults.ip.reservations.ip_type)
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0
@@ -72,7 +90,7 @@ locals {
         suffix = lookup(e, "suffix", local.defaults.iqn.iqn_blocks.suffix)
         to     = lookup(e, "to", null)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.iqn.name_suffix}"
+      name         = "${local.name_prefix.iqn}${v.name}${local.name_suffix.iqn}"
       organization = var.organization
       prefix       = lookup(v, "prefix", local.defaults.iqn.prefix)
       reservations = lookup(v, "reservations", [])
@@ -80,13 +98,13 @@ locals {
     }
   }
   iqn_reservations = { for i in flatten([
-    for value in local.iqn : [
+    for key, value in local.iqn : [
       for v in value.reservations : [
         for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.iqn.reservations.allocation_type)
           identity        = s
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0
@@ -106,20 +124,20 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.mac.name_suffix}"
+      name         = "${local.name_prefix.mac}${v.name}${local.name_suffix.mac}"
       organization = var.organization
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
   mac_reservations = { for i in flatten([
-    for value in local.mac : [
+    for key, value in local.mac : [
       for v in value.reservations : [
         for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.mac.reservations.allocation_type)
           identity        = s
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0
@@ -134,7 +152,7 @@ locals {
     for v in lookup(local.pools, "resource", {}) : v.name => {
       assignment_order   = lookup(v, "assignment_order", local.defaults.resource.assignment_order)
       description        = lookup(v, "description", "")
-      name               = "${local.defaults.name_prefix}${v.name}${local.defaults.resource.name_suffix}"
+      name               = "${local.name_prefix.resource}${v.name}${local.name_suffix.resource}"
       organization       = var.organization
       pool_type          = lookup(v, "pool_type", local.defaults.resource.pool_type)
       resource_type      = lookup(v, "resource_type", local.defaults.resource.resource_type)
@@ -159,7 +177,7 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.uuid.name_suffix}"
+      name         = "${local.name_prefix.uuid}${v.name}${local.name_suffix.uuid}"
       organization = var.organization
       prefix       = lookup(v, "prefix", local.defaults.uuid.prefix)
       reservations = lookup(v, "reservations", [])
@@ -167,13 +185,13 @@ locals {
     }
   }
   uuid_reservations = { for i in flatten([
-    for value in local.uuid : [
+    for key, value in local.uuid : [
       for v in value.reservations : [
         for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.uuid.reservations.allocation_type)
           identity        = s
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0
@@ -194,20 +212,20 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.wwnn.name_suffix}"
+      name         = "${local.name_prefix.wwnn}${v.name}${local.name_suffix.wwnn}"
       organization = var.organization
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
   wwnn_reservations = { for i in flatten([
-    for value in local.wwnn : [
+    for key, value in local.wwnn : [
       for v in value.reservations : [
         for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.wwnn.reservations.allocation_type)
           identity        = s
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0
@@ -228,20 +246,20 @@ locals {
         size = lookup(block, "size", null)
         to   = lookup(block, "to", null)
       }]
-      name         = "${local.defaults.name_prefix}${v.name}${local.defaults.wwnn.name_suffix}"
+      name         = "${local.name_prefix.wwpn}${v.name}${local.name_suffix.wwpn}"
       organization = var.organization
       reservations = lookup(v, "reservations", [])
       tags         = lookup(v, "tags", var.tags)
     }
   }
   wwpn_reservations = { for i in flatten([
-    for value in local.wwpn : [
+    for key, value in local.wwpn : [
       for v in value.reservations : [
         for s in v.identities : {
           allocation_type = lookup(v, "allocation_type", local.defaults.wwpn.reservations.allocation_type)
           identity        = s
           organization    = value.organization
-          pool_name       = value.name
+          pool_name       = key
         }
       ]
     ] if length(value.reservations) > 0

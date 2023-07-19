@@ -23,7 +23,7 @@ A Terraform module to configure Intersight Pools.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | >=1.0.32 |
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.36 |
 ## Modules
 
 No modules.

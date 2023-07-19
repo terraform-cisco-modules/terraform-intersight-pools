@@ -6,9 +6,7 @@
 #____________________________________________________________
 
 data "intersight_compute_physical_summary" "servers" {
-  for_each = {
-    for v in local.serial_number_list : v => v
-  }
+  for_each = { for v in local.serial_number_list : v => v }
   serial = each.value
 }
 

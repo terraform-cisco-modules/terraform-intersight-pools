@@ -2,16 +2,15 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Developed by: Cisco](https://img.shields.io/badge/Developed%20by-Cisco-blue)](https://developer.cisco.com)
 
-# Terraform Intersight Pools Module
+# Terraform Intersight - Pools Module
 
-A Terraform module to configure Intersight Pools.
+A Terraform module to configure Intersight Infrastructure Pools.
 
-## Note
-**This module is not meant for direct use.  Use the Example Module below:**
+### NOTE: THIS MODULE IS DESIGNED TO BE CONSUMED USING "EASY IMM"
 
-## Easy IMM
+### A comprehensive example using this module is available below:
 
-[*Easy IMM - Comprehensive Example*](https://github.com/terraform-cisco-modules/easy-imm-comprehensive-example) - A comprehensive example for policies, pools, and profiles.
+## [Easy IMM](https://github.com/terraform-cisco-modules/easy-imm)
 
 ## Requirements
 

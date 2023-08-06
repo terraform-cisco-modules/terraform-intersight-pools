@@ -4,7 +4,7 @@
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-resource "intersight_ippool_pool" "ip" {
+resource "intersight_ippool_pool" "map" {
   for_each         = local.ip
   assignment_order = each.value.assignment_order
   description      = each.value.description != "" ? each.value.description : "${each.value.name} IP Pool."
@@ -56,7 +56,7 @@ resource "intersight_ippool_pool" "ip" {
   }
 }
 
-resource "intersight_ippool_reservation" "ip" {
+resource "intersight_ippool_reservation" "map" {
   for_each        = local.ip_reservations
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
@@ -66,6 +66,6 @@ resource "intersight_ippool_reservation" "ip" {
     object_type = "organization.Organization"
   }
   pool {
-    moid = intersight_ippool_pool.ip[each.value.pool_name].moid
+    moid = intersight_ippool_pool.map[each.value.pool_name].moid
   }
 }

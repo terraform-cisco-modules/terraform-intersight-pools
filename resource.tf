@@ -16,7 +16,7 @@ data "intersight_compute_physical_summary" "servers" {
 # GUI Location: Pools > Create Pool > Resource Pool
 #____________________________________________________________
 
-resource "intersight_resourcepool_pool" "resource" {
+resource "intersight_resourcepool_pool" "map" {
   for_each         = local.resource
   assignment_order = each.value.assignment_order
   description      = each.value.description != "" ? each.value.description : "${each.value.name} Resource Pool."

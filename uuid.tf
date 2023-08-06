@@ -4,7 +4,7 @@
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-resource "intersight_uuidpool_pool" "uuid" {
+resource "intersight_uuidpool_pool" "map" {
   for_each         = local.uuid
   assignment_order = each.value.assignment_order
   description      = each.value.description != "" ? each.value.description : "${each.value.name} UUID Pool."
@@ -32,7 +32,7 @@ resource "intersight_uuidpool_pool" "uuid" {
   }
 }
 
-resource "intersight_uuidpool_reservation" "uuid" {
+resource "intersight_uuidpool_reservation" "map" {
   for_each        = local.mac_reservations
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
@@ -41,6 +41,6 @@ resource "intersight_uuidpool_reservation" "uuid" {
     object_type = "organization.Organization"
   }
   pool {
-    moid = intersight_uuidpool_pool.uuid[each.value.pool_name].moid
+    moid = intersight_uuidpool_pool.map[each.value.pool_name].moid
   }
 }

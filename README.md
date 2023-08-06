@@ -60,14 +60,14 @@ No modules.
 | [intersight_fcpool_pool.wwpn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
 | [intersight_fcpool_reservation.wwnn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_reservation) | resource |
 | [intersight_fcpool_reservation.wwpn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_reservation) | resource |
-| [intersight_ippool_pool.ip](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_pool) | resource |
-| [intersight_ippool_reservation.ip](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_reservation) | resource |
-| [intersight_iqnpool_pool.iqn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_pool) | resource |
-| [intersight_iqnpool_reservation.iqn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_reservation) | resource |
-| [intersight_macpool_pool.mac](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_pool) | resource |
-| [intersight_macpool_reservation.mac](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_reservation) | resource |
-| [intersight_resourcepool_pool.resource](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resourcepool_pool) | resource |
-| [intersight_uuidpool_pool.uuid](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_pool) | resource |
-| [intersight_uuidpool_reservation.uuid](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_reservation) | resource |
+| [intersight_ippool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_pool) | resource |
+| [intersight_ippool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_reservation) | resource |
+| [intersight_iqnpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_pool) | resource |
+| [intersight_iqnpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_reservation) | resource |
+| [intersight_macpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_pool) | resource |
+| [intersight_macpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_reservation) | resource |
+| [intersight_resourcepool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resourcepool_pool) | resource |
+| [intersight_uuidpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_pool) | resource |
+| [intersight_uuidpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_reservation) | resource |
 | [intersight_compute_physical_summary.servers](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/compute_physical_summary) | data source |
 <!-- END_TF_DOCS -->

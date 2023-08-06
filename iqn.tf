@@ -4,7 +4,7 @@
 # GUI Location: Pools > Create Pool
 #____________________________________________________________
 
-resource "intersight_iqnpool_pool" "iqn" {
+resource "intersight_iqnpool_pool" "map" {
   for_each         = local.iqn
   assignment_order = each.value.assignment_order
   description      = each.value.description != "" ? each.value.description : "${each.value.name} IQN Pool."
@@ -32,7 +32,7 @@ resource "intersight_iqnpool_pool" "iqn" {
   }
 }
 
-resource "intersight_iqnpool_reservation" "iqn" {
+resource "intersight_iqnpool_reservation" "map" {
   for_each        = local.mac_reservations
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
@@ -41,6 +41,6 @@ resource "intersight_iqnpool_reservation" "iqn" {
     object_type = "organization.Organization"
   }
   pool {
-    moid = intersight_iqnpool_pool.iqn[each.value.pool_name].moid
+    moid = intersight_iqnpool_pool.map[each.value.pool_name].moid
   }
 }

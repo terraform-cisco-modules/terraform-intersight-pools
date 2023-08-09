@@ -1,21 +1,9 @@
-variable "organization" {
-  default     = "default"
-  description = "Name of the default intersight Organization."
-  type        = string
-}
+/*_____________________________________________________________________________________________________________________
 
-variable "orgs" {
-  description = "Input orgs List."
-  type        = any
-}
-
+Model Data from Top Level Module
+_______________________________________________________________________________________________________________________
+*/
 variable "pools" {
   description = "Pools - YAML to HCL Data."
   type        = any
-}
-
-variable "tags" {
-  default     = []
-  description = "List of Key/Value Pairs to Assign as Attributes to the Policy."
-  type        = list(map(string))
 }

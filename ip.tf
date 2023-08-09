@@ -65,7 +65,10 @@ resource "intersight_ippool_reservation" "map" {
     moid        = local.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
-  pool {
-    moid = intersight_ippool_pool.map[each.value.pool_name].moid
+  dynamic "pool" {
+    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
+    content {
+      moid = intersight_ippool_pool.map[each.value.pool_name].moid
+    }
   }
 }

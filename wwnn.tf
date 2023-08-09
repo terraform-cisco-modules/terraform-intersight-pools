@@ -41,7 +41,10 @@ resource "intersight_fcpool_reservation" "wwnn" {
     moid        = local.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
-  pool {
-    moid = intersight_fcpool_pool.wwnn[each.value.pool_name].moid
+  dynamic "pool" {
+    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
+    content {
+      moid = intersight_fcpool_pool.map[each.value.pool_name].moid
+    }
   }
 }

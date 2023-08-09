@@ -33,14 +33,17 @@ resource "intersight_uuidpool_pool" "map" {
 }
 
 resource "intersight_uuidpool_reservation" "map" {
-  for_each        = local.mac_reservations
+  for_each        = local.uuid_reservations
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   organization {
     moid        = local.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
-  pool {
-    moid = intersight_uuidpool_pool.map[each.value.pool_name].moid
+  dynamic "pool" {
+    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
+    content {
+      moid = intersight_uuidpool_pool.map[each.value.pool_name].moid
+    }
   }
 }

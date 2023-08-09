@@ -5,8 +5,8 @@ pools:
     description: ''
     ipv4_blocks:
       from: '**REQUIRED**'
-      size: 240 # Must define either size or to, but only define one
-      to: ''
+      size: null
+      to: null
     ipv4_configuration:
       gateway: '**REQUIRED**'
       netmask: '**REQUIRED**'
@@ -14,16 +14,16 @@ pools:
       secondary_dns: ''
     ipv6_blocks:
       from: '**REQUIRED**'
-      size: 1024 # Must define either size or to, but only define one
-      to: ''
+      size: null
+      to: null
     ipv6_configuration: # REQUIRED Settings for IPv6 Pools
       gateway: '**REQUIRED**'
-      prefix: '**REQUIRED**'
+      prefix: 24
       primary_dns: '2620:119:53::53' # 2620:119:53::53
       secondary_dns: '::'
     name: '**REQUIRED**'
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       ip_type: IPv4
       identities: [] # Required
     tags:
@@ -35,12 +35,12 @@ pools:
     name: '**REQUIRED**'
     iqn_blocks:
       from: '**REQUIRED**'
-      size: 1024  # Must define either size or to, but only define one
+      size: null
       suffix: ucs-host
-      to: 0
+      to: null
     prefix: ''
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       identities: [] # Required
     tags:
       key: ''
@@ -50,11 +50,11 @@ pools:
     description: ''
     mac_blocks:
       from: '**REQUIRED**'
-      size: 1024  # Must define either size or to, but only define one
-      to: 0
+      size: null
+      to: null
     name: '**REQUIRED**'
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       ip_type: IPv4
       identities: [] # Required
     tags:
@@ -94,7 +94,7 @@ pools:
     name: '**REQUIRED**'
     prefix: 000025B5-0000-0000
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       ip_type: IPv4
       identities: [] # Required
     tags:
@@ -102,18 +102,18 @@ pools:
       value: ''
     uuid_blocks:
       from: '**REQUIRED**'
-      size: 1024  # Must define either size or to, but only define one
-      to: 0
+      size: null
+      to: null
   wwnn:
     assignment_order: 'sequential'
     description: ''
     id_blocks:
       from: '**REQUIRED**'
-      size: 1024  # Must define either size or to, but only define one
-      to: 0
+      size: null
+      to: null
     name: '**REQUIRED**'
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       ip_type: IPv4
       identities: [] # Required
     tags:
@@ -124,11 +124,11 @@ pools:
     description: ''
     id_blocks:
       from: '**REQUIRED**'
-      size: 1024  # Must define either size or to, but only define one
-      to: 0
+      size: null
+      to: null
     name: '**REQUIRED**'
     reservations:
-      allocation_type: static
+      allocation_type: dynamic
       ip_type: IPv4
       identities: [] # Required
     tags:

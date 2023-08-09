@@ -30,10 +30,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_organization"></a> [organization](#input\_organization) | Name of the default intersight Organization. | `string` | `"default"` | no |
-| <a name="input_orgs"></a> [orgs](#input\_orgs) | Input orgs List. | `any` | n/a | yes |
 | <a name="input_pools"></a> [pools](#input\_pools) | Pools - YAML to HCL Data. | `any` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | List of Key/Value Pairs to Assign as Attributes to the Policy. | `list(map(string))` | `[]` | no |
 ## Outputs
 
 | Name | Description |

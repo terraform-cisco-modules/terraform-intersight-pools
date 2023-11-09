@@ -39,9 +39,9 @@ resource "intersight_resourcepool_pool" "map" {
       additional_properties = ""
       class_id              = "resource.Selector"
       object_type           = "resource.Selector"
-      selector = "/api/v1/compute/${each.value.server_type}?$filter=(Moid in (${format(
-        "'%s'", join("','", [
-          for s in each.value.serial_number_list : data.intersight_compute_physical_summary.servers[s].results[0].moid
+      selector = "/api/v1/compute/${element(split(".", data.intersight_compute_physical_summary.servers[each.value.serial_number_list[0]
+        ].results[0].source_object_type), 1)}s?$filter=(Moid in (${format("'%s'", join("','", [
+        for s in each.value.serial_number_list : data.intersight_compute_physical_summary.servers[s].results[0].moid
       ]))})) and (ManagementMode eq 'Intersight')"
     }
   ]

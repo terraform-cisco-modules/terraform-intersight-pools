@@ -22,7 +22,7 @@ A Terraform module to configure Intersight Infrastructure Pools.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.36 |
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.40 |
 ## Modules
 
 No modules.
@@ -30,7 +30,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_pools"></a> [pools](#input\_pools) | Pools - YAML to HCL Data. | `any` | n/a | yes |
+| <a name="input_global_settings"></a> [global\_settings](#input\_global\_settings) | YAML to HCL Data - global\_settings. | `any` | n/a | yes |
+| <a name="input_model"></a> [model](#input\_model) | YAML to HCL Data - model. | `any` | n/a | yes |
+| <a name="input_orgs"></a> [orgs](#input\_orgs) | Intersight Organizations Moid Data. | `any` | n/a | yes |
 ## Outputs
 
 | Name | Description |
@@ -39,6 +41,7 @@ No modules.
 | <a name="output_ip_reservations"></a> [ip\_reservations](#output\_ip\_reservations) | Moids of the IP Pool Reservations. |
 | <a name="output_iqn"></a> [iqn](#output\_iqn) | Moids of the IQN Pools. |
 | <a name="output_iqn_reservations"></a> [iqn\_reservations](#output\_iqn\_reservations) | Moids of the IQN Pool Reservations. |
+| <a name="output_locals"></a> [locals](#output\_locals) | n/a |
 | <a name="output_mac"></a> [mac](#output\_mac) | Moids of the MAC Pools. |
 | <a name="output_mac_reservations"></a> [mac\_reservations](#output\_mac\_reservations) | Moids of the MAC Pool Reservations. |
 | <a name="output_resource"></a> [resource](#output\_resource) | Moids of the Resource Pools. |
@@ -48,21 +51,28 @@ No modules.
 | <a name="output_wwnn_reservations"></a> [wwnn\_reservations](#output\_wwnn\_reservations) | Moids of the WWNN Pool Reservations. |
 | <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moids of the WWPN Pools. |
 | <a name="output_wwpn_reservations"></a> [wwpn\_reservations](#output\_wwpn\_reservations) | Moids of the WWPN Pool Reservations. |
+| <a name="output_z_moids_of_pools_that_were_referenced_in_server_profile_reservations_but_not_already_created"></a> [z\_moids\_of\_pools\_that\_were\_referenced\_in\_server\_profile\_reservations\_but\_not\_already\_created](#output\_z\_moids\_of\_pools\_that\_were\_referenced\_in\_server\_profile\_reservations\_but\_not\_already\_created) | moids of Pools that were referenced in server profiles but not defined |
 ## Resources
 
 | Name | Type |
 |------|------|
 | [intersight_fcpool_pool.wwnn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
+| [intersight_fcpool_pool.wwnn_data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
 | [intersight_fcpool_pool.wwpn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
+| [intersight_fcpool_pool.wwpn_data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
 | [intersight_fcpool_reservation.wwnn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_reservation) | resource |
 | [intersight_fcpool_reservation.wwpn](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_reservation) | resource |
+| [intersight_ippool_pool.data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_pool) | resource |
 | [intersight_ippool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_pool) | resource |
 | [intersight_ippool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/ippool_reservation) | resource |
+| [intersight_iqnpool_pool.data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_pool) | resource |
 | [intersight_iqnpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_pool) | resource |
 | [intersight_iqnpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/iqnpool_reservation) | resource |
+| [intersight_macpool_pool.data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_pool) | resource |
 | [intersight_macpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_pool) | resource |
 | [intersight_macpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_reservation) | resource |
 | [intersight_resourcepool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resourcepool_pool) | resource |
+| [intersight_uuidpool_pool.data](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_pool) | resource |
 | [intersight_uuidpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_pool) | resource |
 | [intersight_uuidpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_reservation) | resource |
 | [intersight_compute_physical_summary.servers](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/compute_physical_summary) | data source |

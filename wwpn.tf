@@ -32,8 +32,26 @@ resource "intersight_fcpool_pool" "wwpn" {
   }
 }
 
+resource "intersight_fcpool_pool" "wwpn_data" {
+  depends_on = [intersight_fcpool_pool.wwpn]
+  for_each   = { for v in local.reservation_wwpn_pools : v => v if lookup(local.wwpn, v, "#NOEXIST") == "#NOEXIST" }
+  name       = element(split("/", each.value), 1)
+  organization {
+    moid = local.orgs[element(split("/", each.value), 0)]
+  }
+  pool_purpose = "WWPN"
+  lifecycle {
+    ignore_changes = [
+      account_moid, additional_properties, ancestors, assigned, assignment_order, block_heads, create_time, description, domain_group_moid,
+      id_blocks, mod_time, owners, parent, permission_resources, reservations, reserved, shared_scope, size, tags, version_context
+    ]
+    prevent_destroy = true
+  }
+}
+
 resource "intersight_fcpool_reservation" "wwpn" {
-  for_each        = local.wwpn_reservations
+  depends_on      = [intersight_fcpool_pool.wwpn_data]
+  for_each        = { for v in local.reservations : "${v.combined}/${v.identity}" => v if v.identity_type == "wwpn" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   id_purpose      = "WWPN"
@@ -44,7 +62,8 @@ resource "intersight_fcpool_reservation" "wwpn" {
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = intersight_fcpool_pool.map[each.value.pool_name].moid
+      moid = lookup(local.wwpn, each.value.combined, "#NOEXIST") != "#NOEXIST" ? intersight_fcpool_pool.wwpn[each.value.combined
+      ].moid : intersight_fcpool_pool.wwpn_data[each.value.combined].moid
     }
   }
 }

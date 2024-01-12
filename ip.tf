@@ -56,8 +56,26 @@ resource "intersight_ippool_pool" "map" {
   }
 }
 
+resource "intersight_ippool_pool" "data" {
+  depends_on = [intersight_ippool_pool.map]
+  for_each   = { for v in local.reservation_ip_pools : v => v if lookup(local.ip, v, "#NOEXIST") == "#NOEXIST" }
+  name       = element(split("/", each.value), 1)
+  organization {
+    moid = local.orgs[element(split("/", each.value), 0)]
+  }
+  lifecycle {
+    ignore_changes = [
+      account_moid, additional_properties, ancestors, assigned, assignment_order, create_time, description, domain_group_moid,
+      ip_v4_blocks, ip_v4_config, ip_v6_blocks, ip_v6_config, mod_time, owners, parent, permission_resources, reservations, reserved,
+      shadow_pools, shared_scope, size, tags, v4_assigned, v4_size, v6_assigned, v6_size, version_context
+    ]
+    prevent_destroy = true
+  }
+}
+
 resource "intersight_ippool_reservation" "map" {
-  for_each        = local.ip_reservations
+  depends_on      = [intersight_ippool_pool.data]
+  for_each        = { for v in local.reservations : "${v.combined}/${v.identity}" => v if v.identity_type == "ip" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   ip_type         = each.value.ip_type
@@ -68,7 +86,9 @@ resource "intersight_ippool_reservation" "map" {
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = intersight_ippool_pool.map[each.value.pool_name].moid
+      moid = lookup(local.ip, each.value.combined, "#NOEXIST") != "#NOEXIST" ? intersight_ippool_pool.map[each.value.combined
+      ].moid : intersight_ippool_pool.data[each.value.combined].moid
     }
   }
 }
+

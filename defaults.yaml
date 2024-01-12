@@ -22,10 +22,6 @@ pools:
       primary_dns: '2620:119:53::53' # 2620:119:53::53
       secondary_dns: '::'
     name: '**REQUIRED**'
-    reservations:
-      allocation_type: dynamic
-      ip_type: IPv4
-      identities: [] # Required
     tags:
       key: ''
       value: ''
@@ -39,9 +35,6 @@ pools:
       suffix: ucs-host
       to: null
     prefix: ''
-    reservations:
-      allocation_type: dynamic
-      identities: [] # Required
     tags:
       key: ''
       value: ''
@@ -53,10 +46,6 @@ pools:
       size: null
       to: null
     name: '**REQUIRED**'
-    reservations:
-      allocation_type: dynamic
-      ip_type: IPv4
-      identities: [] # Required
     tags:
       key: ''
       value: ''
@@ -88,15 +77,19 @@ pools:
     tags:
       key: ''
       value: ''
+  reservations:
+    allocation_type: dynamic
+    identity: 00:25:B5:EA:A0:00
+    identity_type: mac
+    interface: EMPTY
+    ip_type: IPv4
+    management_type: OutOfBand
+    pool_name: dummy
   uuid:
     assignment_order: 'sequential'
     description: ''
     name: '**REQUIRED**'
     prefix: 000025B5-0000-0000
-    reservations:
-      allocation_type: dynamic
-      ip_type: IPv4
-      identities: [] # Required
     tags:
       key: ''
       value: ''
@@ -112,10 +105,6 @@ pools:
       size: null
       to: null
     name: '**REQUIRED**'
-    reservations:
-      allocation_type: dynamic
-      ip_type: IPv4
-      identities: [] # Required
     tags:
       key: ''
       value: ''
@@ -127,10 +116,6 @@ pools:
       size: null
       to: null
     name: '**REQUIRED**'
-    reservations:
-      allocation_type: dynamic
-      ip_type: IPv4
-      identities: [] # Required
     tags:
       key: ''
       value: ''

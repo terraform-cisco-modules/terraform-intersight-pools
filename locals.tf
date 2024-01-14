@@ -79,7 +79,7 @@ locals {
   # Intersight Pool - Reservations
   #____________________________________________________________
   reservations = flatten([for org in sort(keys(var.model)) : [
-    for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []) : e.targets]) : v.reservations]
+    for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []) : e.targets if lookup(e, "ignore_reservations", true) == false]) : lookup(v, "reservations", [])]
       ) : merge(local.defaults.reservations, r, {
         combined     = length(regexall("/", r.pool_name)) > 0 ? r.pool_name : "${org}/${r.pool_name}"
         organization = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 0) : org

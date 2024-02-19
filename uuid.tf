@@ -13,7 +13,7 @@ resource "intersight_uuidpool_pool" "map" {
   dynamic "uuid_suffix_blocks" {
     for_each = { for v in each.value.uuid_blocks : v.from => v }
     content {
-      object_type = "uuidpool.UuidBlock"
+      object_type = "uuidpool.uuidBlock"
       from        = uuid_suffix_blocks.value.from
       size        = uuid_suffix_blocks.value.size
       to          = uuid_suffix_blocks.value.to

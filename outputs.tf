@@ -18,16 +18,16 @@ output "iqn_reservations" {
   value       = { for v in sort(keys(intersight_iqnpool_reservation.map)) : v => intersight_iqnpool_reservation.map[v].moid }
 }
 
-output "locals" {
-  value = {
-    ip   = concat([for k, v in local.ip : k], [for v in local.reservation_ip_pools : v if lookup(local.ip, v, "#NOEXIST") == "#NOEXIST"])
-    iqn  = concat([for k, v in local.iqn : k], [for v in local.reservation_iqn_pools : v if lookup(local.iqn, v, "#NOEXIST") == "#NOEXIST"])
-    mac  = concat([for k, v in local.mac : k], [for v in local.reservation_mac_pools : v if lookup(local.mac, v, "#NOEXIST") == "#NOEXIST"])
-    uuid = concat([for k, v in local.uuid : k], [for v in local.reservation_uuid_pools : v if lookup(local.uuid, v, "#NOEXIST") == "#NOEXIST"])
-    wwnn = concat([for k, v in local.wwnn : k], [for v in local.reservation_wwnn_pools : v if lookup(local.wwnn, v, "#NOEXIST") == "#NOEXIST"])
-    wwpn = concat([for k, v in local.wwpn : k], [for v in local.reservation_wwpn_pools : v if lookup(local.wwpn, v, "#NOEXIST") == "#NOEXIST"])
-  }
-}
+#output "locals" {
+#  value = {
+#    ip   = concat([for k, v in local.ip : k], [for v in local.reservation_ip_pools : v if lookup(local.ip, v, "#NOEXIST") == "#NOEXIST"])
+#    iqn  = concat([for k, v in local.iqn : k], [for v in local.reservation_iqn_pools : v if lookup(local.iqn, v, "#NOEXIST") == "#NOEXIST"])
+#    mac  = concat([for k, v in local.mac : k], [for v in local.reservation_mac_pools : v if lookup(local.mac, v, "#NOEXIST") == "#NOEXIST"])
+#    uuid = concat([for k, v in local.uuid : k], [for v in local.reservation_uuid_pools : v if lookup(local.uuid, v, "#NOEXIST") == "#NOEXIST"])
+#    wwnn = concat([for k, v in local.wwnn : k], [for v in local.reservation_wwnn_pools : v if lookup(local.wwnn, v, "#NOEXIST") == "#NOEXIST"])
+#    wwpn = concat([for k, v in local.wwpn : k], [for v in local.reservation_wwpn_pools : v if lookup(local.wwpn, v, "#NOEXIST") == "#NOEXIST"])
+#  }
+#}
 output "mac" {
   description = "Moids of the MAC Pools."
   value       = { for v in sort(keys(intersight_macpool_pool.map)) : v => intersight_macpool_pool.map[v].moid }

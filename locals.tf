@@ -24,7 +24,7 @@ locals {
       wwpn     = v.wwpn != "" ? v.wwpn : v.default
     }
   ]]) : i.org => i }
-  orgs = var.orgs
+  org_moids = { for k, v in var.orgs : v => k }
 
   #____________________________________________________________
   #
@@ -81,19 +81,41 @@ locals {
   # Intersight Pool - Reservations
   #____________________________________________________________
   reservations = flatten([for org in sort(keys(var.model)) : [
-    for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []) : e.targets if lookup(e, "ignore_reservations", true) == false]) : lookup(v, "reservations", [])]
+    for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []
+      ) : e.targets if lookup(e, "ignore_reservations", true) == false]) : lookup(v, "reservations", [])]
       ) : merge(local.defaults.reservations, r, {
-        combined     = length(regexall("/", r.pool_name)) > 0 ? r.pool_name : "${org}/${r.pool_name}"
-        organization = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 0) : org
-        pool_name    = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 1) : r.pool_name
+        combined = length(regexall("/", r.pool_name)) > 0 ? r.pool_name : "${org}/${r.pool_name}"
+        org      = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 0) : org
+        pool     = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 1) : r.pool_name
     })
   ]])
-  reservation_ip_pools   = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "ip"]))
-  reservation_iqn_pools  = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "iqn"]))
-  reservation_mac_pools  = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "mac"]))
-  reservation_uuid_pools = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "uuid"]))
-  reservation_wwnn_pools = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "wwnn"]))
-  reservation_wwpn_pools = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "wwpn"]))
+  reservation = {
+    ip   = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "ip"]))
+    iqn  = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "iqn"]))
+    mac  = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "mac"]))
+    uuid = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "uuid"]))
+    wwnn = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "wwnn"]))
+    wwpn = distinct(compact([for v in local.reservations : "${v.organization}/${v.pool_name}" if v.identity_type == "wwpn"]))
+  }
+  pools = {
+    ip   = { moids = keys(local.ip), object = "ippool.Pool" }
+    iqn  = { moids = keys(local.iqn), object = "iqnpool.Pool" }
+    mac  = { moids = keys(local.mac), object = "macpool.Pool" }
+    uuid = { moids = keys(local.uuid), object = "uuidpool.Pool" }
+    wwnn = { moids = keys(local.wwnn), object = "fcpool.Pool" }
+    wwpn = { moids = keys(local.wwpn), object = "fcpool.Pool" }
+  }
+  pool_types = ["ip", "iqn", "mac", "uuid", "wwnn", "wwpn"]
+  data_pools = { for e in local.pool_types : e => [for v in local.reservation[e] : element(split("/", v), 1
+  ) if contains(local.pools[e].moids, v) == false] }
+  reservation_results = {
+    ip   = { for v in sort(keys(intersight_ippool_reservation.map)) : v => intersight_ippool_reservation.map[v].moid }
+    iqn  = { for v in sort(keys(intersight_iqnpool_reservation.map)) : v => intersight_iqnpool_reservation.map[v].moid }
+    mac  = { for v in sort(keys(intersight_macpool_reservation.map)) : v => intersight_macpool_reservation.map[v].moid }
+    uuid = { for v in sort(keys(intersight_uuidpool_reservation.map)) : v => intersight_uuidpool_reservation.map[v].moid }
+    wwnn = { for v in sort(keys(intersight_fcpool_reservation.wwnn)) : v => intersight_fcpool_reservation.wwnn[v].moid }
+    wwpn = { for v in sort(keys(intersight_fcpool_reservation.wwpn)) : v => intersight_fcpool_reservation.wwpn[v].moid }
+  }
 
   #____________________________________________________________
   #

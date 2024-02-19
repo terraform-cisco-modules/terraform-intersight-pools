@@ -44,7 +44,7 @@ resource "intersight_resourcepool_pool" "map" {
     }
   ]
   organization {
-    moid        = local.orgs[each.value.organization]
+    moid        = var.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
   dynamic "tags" {

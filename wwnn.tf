@@ -20,7 +20,7 @@ resource "intersight_fcpool_pool" "wwnn" {
     }
   }
   organization {
-    moid        = local.orgs[each.value.organization]
+    moid        = var.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
   dynamic "tags" {
@@ -32,38 +32,23 @@ resource "intersight_fcpool_pool" "wwnn" {
   }
 }
 
-resource "intersight_fcpool_pool" "wwnn_data" {
-  depends_on = [intersight_fcpool_pool.wwnn]
-  for_each   = { for v in local.reservation_wwnn_pools : v => v if lookup(local.wwnn, v, "#NOEXIST") == "#NOEXIST" }
-  name       = element(split("/", each.value), 1)
-  organization {
-    moid = local.orgs[element(split("/", each.value), 0)]
-  }
-  pool_purpose = "WWNN"
-  lifecycle {
-    ignore_changes = [
-      account_moid, additional_properties, ancestors, assigned, assignment_order, block_heads, create_time, description, domain_group_moid,
-      id_blocks, mod_time, owners, parent, permission_resources, reservations, reserved, shared_scope, size, tags, version_context
-    ]
-    prevent_destroy = true
-  }
-}
-
 resource "intersight_fcpool_reservation" "wwnn" {
-  depends_on      = [intersight_fcpool_pool.wwnn_data]
+  depends_on      = [intersight_fcpool_pool.wwnn]
   for_each        = { for v in local.reservations : "${v.combined}/${v.identity}" => v if v.identity_type == "wwnn" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   id_purpose      = "WWNN"
   organization {
-    moid        = local.orgs[each.value.organization]
+    moid        = var.orgs[each.value.organization]
     object_type = "organization.Organization"
   }
   dynamic "pool" {
-    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
+    for_each = { for v in [each.value.combined] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = lookup(local.wwnn, each.value.combined, "#NOEXIST") != "#NOEXIST" ? intersight_fcpool_pool.wwnn[each.value.combined
-      ].moid : intersight_fcpool_pool.wwnn_data[each.value.combined].moid
+      moid = contains(local.pools.wwnn.moids, each.value.combined) ? intersight_fcpool_pool.wwnn[each.value.combined
+        ].moid : [for i in data.intersight_search_search_item.pools["wwnn"
+          ].results : i.moid if jsondecode(i.additional_properties).Name == each.value.pool && jsondecode(i.additional_properties
+      ).Organization.Moid == var.orgs[each.value.org]][0]
     }
   }
 }

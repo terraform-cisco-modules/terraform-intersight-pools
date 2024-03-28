@@ -6,6 +6,10 @@ pools:
     ipv4_blocks:
       from: '**REQUIRED**'
       size: null
+      gateway: ''
+      netmask: ''
+      primary_dns: ''
+      secondary_dns: ''
       to: null
     ipv4_configuration:
       gateway: '**REQUIRED**'
@@ -15,10 +19,14 @@ pools:
     ipv6_blocks:
       from: '**REQUIRED**'
       size: null
+      gateway: ''
+      prefix: 0
+      primary_dns: ''
+      secondary_dns: ''
       to: null
     ipv6_configuration: # REQUIRED Settings for IPv6 Pools
       gateway: '**REQUIRED**'
-      prefix: 24
+      prefix: 0
       primary_dns: '2620:119:53::53' # 2620:119:53::53
       secondary_dns: '::'
     name: '**REQUIRED**'

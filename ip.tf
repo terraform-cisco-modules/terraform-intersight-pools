@@ -13,13 +13,13 @@ resource "intersight_ippool_pool" "map" {
     for_each = { for v in each.value.ipv4_blocks : v.from => v }
     content {
       from = ip_v4_blocks.value.from
-      #ip_v4_config {
-      #  gateway       = ip_v4_blocks.value.gateway
-      #  netmask       = ip_v4_blocks.value.netmask
-      #  object_type   = "ippool.IpV4Config"
-      #  primary_dns   = ip_v4_blocks.value.primary_dns
-      #  secondary_dns = ip_v4_blocks.value.secondary_dns
-      #}
+      ip_v4_config {
+        gateway       = ip_v4_blocks.value.gateway
+        netmask       = ip_v4_blocks.value.netmask
+        object_type   = "ippool.IpV4Config"
+        primary_dns   = ip_v4_blocks.value.primary_dns
+        secondary_dns = ip_v4_blocks.value.secondary_dns
+      }
       size = ip_v4_blocks.value.size
       to   = ip_v4_blocks.value.to
     }
@@ -37,13 +37,13 @@ resource "intersight_ippool_pool" "map" {
     for_each = { for v in each.value.ipv6_blocks : v.from => v }
     content {
       from = ip_v6_blocks.value.from
-      #ip_v6_config {
-      #  gateway       = ip_v6_blocks.value.gateway
-      #  object_type   = "ippool.IpV6Config"
-      #  prefix        = ip_v6_blocks.value.prefix
-      #  primary_dns   = ip_v6_blocks.value.primary_dns
-      #  secondary_dns = ip_v6_blocks.value.secondary_dns
-      #}
+      ip_v6_config {
+        gateway       = ip_v6_blocks.value.gateway
+        object_type   = "ippool.IpV6Config"
+        prefix        = ip_v6_blocks.value.prefix
+        primary_dns   = ip_v6_blocks.value.primary_dns
+        secondary_dns = ip_v6_blocks.value.secondary_dns
+      }
       size = ip_v6_blocks.value.size
       to   = ip_v6_blocks.value.to
     }
@@ -57,10 +57,7 @@ resource "intersight_ippool_pool" "map" {
       secondary_dns = ip_v6_config.value.secondary_dns
     }
   }
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "tags" {
     for_each = { for v in each.value.tags : v.key => v }
     content {
@@ -76,10 +73,7 @@ resource "intersight_ippool_reservation" "map" {
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   ip_type         = each.value.ip_type
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {

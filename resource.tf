@@ -43,10 +43,7 @@ resource "intersight_resourcepool_pool" "map" {
       ]))})) and (ManagementMode eq '${data.intersight_compute_physical_summary.servers[each.value.serial_number_list[0]].results[0].management_mode}')"
     }
   ]
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "tags" {
     for_each = { for v in each.value.tags : v.key => v }
     content {

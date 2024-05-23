@@ -19,10 +19,7 @@ resource "intersight_fcpool_pool" "wwpn" {
       to          = id_blocks.value.to
     }
   }
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "tags" {
     for_each = { for v in each.value.tags : v.key => v }
     content {
@@ -38,10 +35,7 @@ resource "intersight_fcpool_reservation" "wwpn" {
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   id_purpose      = "WWPN"
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {

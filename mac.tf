@@ -33,7 +33,7 @@ resource "intersight_macpool_pool" "map" {
 
 resource "intersight_macpool_reservation" "map" {
   depends_on      = [intersight_macpool_pool.map]
-  for_each        = { for v in local.reservations : "${v.combined}/${v.identity}" => v if v.identity_type == "mac" }
+  for_each        = { for v in local.reservations : "${v.pool_name}/${v.identity}" => v if v.identity_type == "mac" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   organization {
@@ -41,12 +41,9 @@ resource "intersight_macpool_reservation" "map" {
     object_type = "organization.Organization"
   }
   dynamic "pool" {
-    for_each = { for v in [each.value.combined] : v => v if each.value.allocation_type == "dynamic" }
+    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.mac.moids, each.value.combined) ? intersight_macpool_pool.map[each.value.combined
-        ].moid : [for i in data.intersight_search_search_item.pools["mac"
-          ].results : i.moid if jsondecode(i.additional_properties).Name == each.value.pool && jsondecode(i.additional_properties
-      ).Organization.Moid == var.orgs[each.value.org]][0]
+      moid = contains(local.pools.mac.moids, pool.value) ? intersight_macpool_pool.map[pool.value].moid : local.pools_data["mac"][pool.value].moid
     }
   }
 }

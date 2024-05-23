@@ -37,7 +37,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_data_pools"></a> [data\_pools](#output\_data\_pools) | n/a |
+| <a name="output_data_pools"></a> [data\_pools](#output\_data\_pools) | Moid's of the Pools that were not defined locally. |
 | <a name="output_name_prefix"></a> [name\_prefix](#output\_name\_prefix) | Name Prefix Outputs. |
 | <a name="output_name_suffix"></a> [name\_suffix](#output\_name\_suffix) | Name Suffix Outputs. |
 | <a name="output_ip"></a> [ip](#output\_ip) | Moids of the IP Pools. |

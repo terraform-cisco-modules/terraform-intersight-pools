@@ -4,10 +4,8 @@
 #__________________________________________________________
 
 output "data_pools" {
-  value = { for e in keys(data.intersight_search_search_item.pools) : e => {
-    for i in data.intersight_search_search_item.pools[e
-    ].results : "${local.org_moids[jsondecode(i.additional_properties).Organization.Moid]}/${jsondecode(i.additional_properties).Name}" => i.moid }
-  }
+  description = "Moid's of the Pools that were not defined locally."
+  value       = { for e in sort(keys(local.pools_data)) : e => { for k, v in local.pools_data[e] : k => v.moid } }
 }
 
 #__________________________________________________________

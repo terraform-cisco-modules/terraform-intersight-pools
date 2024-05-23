@@ -14,7 +14,7 @@ pools:
     ipv4_configuration:
       gateway: '**REQUIRED**'
       netmask: '**REQUIRED**'
-      primary_dns: '208.67.220.220' # 208.67.220.220
+      primary_dns: '208.67.220.220'
       secondary_dns: ''
     ipv6_blocks:
       from: '**REQUIRED**'
@@ -24,10 +24,10 @@ pools:
       primary_dns: ''
       secondary_dns: ''
       to: null
-    ipv6_configuration: # REQUIRED Settings for IPv6 Pools
+    ipv6_configuration:
       gateway: '**REQUIRED**'
       prefix: 0
-      primary_dns: '2620:119:53::53' # 2620:119:53::53
+      primary_dns: '2620:119:53::53'
       secondary_dns: '::'
     name: '**REQUIRED**'
     tags:

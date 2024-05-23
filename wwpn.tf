@@ -34,7 +34,7 @@ resource "intersight_fcpool_pool" "wwpn" {
 
 resource "intersight_fcpool_reservation" "wwpn" {
   depends_on      = [intersight_fcpool_pool.wwpn]
-  for_each        = { for v in local.reservations : "${v.combined}/${v.identity}" => v if v.identity_type == "wwpn" }
+  for_each        = { for v in local.reservations : "${v.pool_name}/${v.identity}" => v if v.identity_type == "wwpn" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   id_purpose      = "WWPN"
@@ -43,12 +43,9 @@ resource "intersight_fcpool_reservation" "wwpn" {
     object_type = "organization.Organization"
   }
   dynamic "pool" {
-    for_each = { for v in [each.value.combined] : v => v if each.value.allocation_type == "dynamic" }
+    for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.wwpn.moids, each.value.combined) ? intersight_fcpool_pool.wwpn[each.value.combined
-        ].moid : [for i in data.intersight_search_search_item.pools["wwpn"
-          ].results : i.moid if jsondecode(i.additional_properties).Name == each.value.pool && jsondecode(i.additional_properties
-      ).Organization.Moid == var.orgs[each.value.org]][0]
+      moid = contains(local.pools.wwpn.moids, pool.value) ? intersight_fcpool_pool.wwpn[pool.value].moid : local.pools_data["wwpn"][pool.value].moid
     }
   }
 }

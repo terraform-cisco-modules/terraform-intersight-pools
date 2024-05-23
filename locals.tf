@@ -1,38 +1,29 @@
 locals {
+  #____________________________________________________________
+  #
+  # local defaults and name suffix/prefix
+  #____________________________________________________________
   defaults = yamldecode(file("${path.module}/defaults.yaml")).pools
-  name_prefix = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in [lookup(lookup(var.model[org], "pools", {}), "name_prefix", local.defaults.name_prefix)] : {
-      ip       = v.ip != "" ? v.ip : v.default
-      iqn      = v.iqn != "" ? v.iqn : v.default
-      mac      = v.mac != "" ? v.mac : v.default
-      org      = org
-      resource = v.resource != "" ? v.resource : v.default
-      uuid     = v.uuid != "" ? v.uuid : v.default
-      wwnn     = v.wwnn != "" ? v.wwnn : v.default
-      wwpn     = v.wwpn != "" ? v.wwpn : v.default
-    }
-  ]]) : i.org => i }
-  name_suffix = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in [lookup(lookup(var.model[org], "pools", {}), "name_suffix", local.defaults.name_suffix)] : {
-      ip       = v.ip != "" ? v.ip : v.default
-      iqn      = v.iqn != "" ? v.iqn : v.default
-      mac      = v.mac != "" ? v.mac : v.default
-      org      = org
-      resource = v.resource != "" ? v.resource : v.default
-      uuid     = v.uuid != "" ? v.uuid : v.default
-      wwnn     = v.wwnn != "" ? v.wwnn : v.default
-      wwpn     = v.wwpn != "" ? v.wwpn : v.default
-    }
-  ]]) : i.org => i }
+  model    = { for org in sort(keys(var.model)) : org => lookup(var.model[org], "pools", {}) }
+  name_prefix = { for org in local.org_keys : org => {
+    for e in local.pool_type : e => lookup(lookup(local.model[org], "name_prefix", {}
+    ), e, lookup(lookup(local.model[org], "name_prefix", local.defaults.name_prefix), "default", ""))
+  } }
+  name_suffix = { for org in local.org_keys : org => {
+    for e in local.pool_type : e => lookup(lookup(local.model[org], "name_suffix", {}
+    ), e, lookup(lookup(local.model[org], "name_suffix", local.defaults.name_suffix), "default", ""))
+  } }
+  org_keys  = sort(keys(var.model))
   org_moids = { for k, v in var.orgs : v => k }
+  pool_type = ["ip", "iqn", "mac", "resource", "uuid", "wwnn", "wwpn"]
 
   #____________________________________________________________
   #
   # Intersight IP Pool
   # GUI Location: Pools > Create Pool: IP
   #____________________________________________________________
-  ip = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "ip", []) : merge(local.defaults.ip, v, {
+  ip = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "ip", []) : merge(local.defaults.ip, v, {
       ipv4_blocks = [for e in lookup(v, "ipv4_blocks", []) : merge(local.defaults.ip.ipv4_blocks, e)]
       ipv4_config = [for e in [lookup(v, "ipv4_configuration", {})
       ] : merge(local.defaults.ip.ipv4_configuration, e) if length(lookup(v, "ipv4_configuration", {})) > 0]
@@ -44,43 +35,43 @@ locals {
       organization = org
       tags         = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "ip", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(local.model[org], "ip", [])) > 0]) : "${i.organization}/${i.key}" => i }
 
   #____________________________________________________________
   #
   # Intersight IQN Pool
   # GUI Location: Pools > Create Pool: IQN
   #____________________________________________________________
-  iqn = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "iqn", []) : merge(local.defaults.iqn, v, {
+  iqn = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "iqn", []) : merge(local.defaults.iqn, v, {
       iqn_blocks   = [for e in lookup(v, "iqn_blocks", []) : merge(local.defaults.iqn.iqn_blocks, e)]
       key          = v.name
       name         = "${local.name_prefix[org].iqn}${v.name}${local.name_suffix[org].iqn}"
       organization = org
       tags         = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "iqn", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(local.model[org], "iqn", [])) > 0]) : "${i.organization}/${i.key}" => i }
 
   #____________________________________________________________
   #
   # Intersight MAC Pool
   # GUI Location: Pools > Create Pool: MAC
   #____________________________________________________________
-  mac = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "mac", []) : merge(local.defaults.mac, v, {
+  mac = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "mac", []) : merge(local.defaults.mac, v, {
       mac_blocks   = [for e in lookup(v, "mac_blocks", []) : merge(local.defaults.mac.mac_blocks, e)]
       key          = v.name
       name         = "${local.name_prefix[org].mac}${v.name}${local.name_suffix[org].mac}"
       organization = org
       tags         = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "mac", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(var.model[org], "mac", [])) > 0]) : "${i.organization}/${i.key}" => i }
 
   #____________________________________________________________
   #
   # Intersight Pool - Reservations
   #____________________________________________________________
-  reservations = flatten([for org in sort(keys(var.model)) : [
+  reservations = flatten([for org in local.org_keys : [
     for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []
       ) : e.targets if lookup(e, "ignore_reservations", true) == false]) : lookup(v, "reservations", [])]
       ) : merge(local.defaults.reservations, r, {
@@ -122,15 +113,15 @@ locals {
   # Intersight Resource Pool
   # GUI Location: Pools > Create Pool: Resource
   #____________________________________________________________
-  resource = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "resource", []) : merge(local.defaults.resource, v, {
+  resource = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "resource", []) : merge(local.defaults.resource, v, {
       key                = v.name
       name               = "${local.name_prefix[org].resource}${v.name}${local.name_suffix[org].resource}"
       organization       = org
       serial_number_list = v.serial_number_list
       tags               = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "resource", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(local.model[org], "resource", [])) > 0]) : "${i.organization}/${i.key}" => i }
   serial_number_list = flatten([for k, v in local.resource : v.serial_number_list])
 
   #____________________________________________________________
@@ -138,8 +129,8 @@ locals {
   # Intersight UUID Pool
   # GUI Location: Pools > Create Pool: UUID
   #____________________________________________________________
-  uuid = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "uuid", []) : merge(local.defaults.uuid, v, {
+  uuid = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "uuid", []) : merge(local.defaults.uuid, v, {
       key          = v.name
       name         = "${local.name_prefix[org].uuid}${v.name}${local.name_suffix[org].uuid}"
       organization = org
@@ -147,30 +138,30 @@ locals {
       tags         = lookup(v, "tags", var.global_settings.tags)
       uuid_blocks  = [for e in lookup(v, "uuid_blocks", []) : merge(local.defaults.uuid.uuid_blocks, e)]
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "uuid", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(local.model[org], "uuid", [])) > 0]) : "${i.organization}/${i.key}" => i }
 
   #____________________________________________________________
   #
   # Intersight WWNN Pool
   # GUI Location: Pools > Create Pool: WWNN
   #____________________________________________________________
-  wwnn = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "wwnn", []) : merge(local.defaults.wwnn, v, {
+  wwnn = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(lookup(local.model[org], "pools", {}), "wwnn", []) : merge(local.defaults.wwnn, v, {
       id_blocks    = [for e in lookup(v, "id_blocks", []) : merge(local.defaults.wwnn.id_blocks, e)]
       key          = v.name
       name         = "${local.name_prefix[org].wwnn}${v.name}${local.name_suffix[org].wwnn}"
       organization = org
       tags         = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "wwnn", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(lookup(local.model[org], "pools", {}), "wwnn", [])) > 0]) : "${i.organization}/${i.key}" => i }
 
   #____________________________________________________________
   #
   # Intersight WWPN Pool
   # GUI Location: Pools > Create Pool: WWPN
   #____________________________________________________________
-  wwpn = { for i in flatten([for org in sort(keys(var.model)) : [
-    for v in lookup(lookup(var.model[org], "pools", {}), "wwpn", []) : merge(local.defaults.wwpn, v, {
+  wwpn = { for i in flatten([for org in local.org_keys : [
+    for v in lookup(local.model[org], "wwpn", []) : merge(local.defaults.wwpn, v, {
       description  = lookup(v, "description", "")
       key          = v.name
       id_blocks    = [for e in lookup(v, "id_blocks", []) : merge(local.defaults.wwpn.id_blocks, e)]
@@ -178,5 +169,5 @@ locals {
       organization = org
       tags         = lookup(v, "tags", var.global_settings.tags)
     })
-  ] if length(lookup(lookup(var.model[org], "pools", {}), "wwpn", [])) > 0]) : "${i.organization}/${i.key}" => i }
+  ] if length(lookup(local.model[org], "wwpn", [])) > 0]) : "${i.organization}/${i.key}" => i }
 }

@@ -13,13 +13,13 @@ resource "intersight_ippool_pool" "map" {
     for_each = { for v in each.value.ipv4_blocks : v.from => v }
     content {
       from = ip_v4_blocks.value.from
-      ip_v4_config {
-        gateway       = ip_v4_blocks.value.gateway
-        netmask       = ip_v4_blocks.value.netmask
-        object_type   = "ippool.IpV4Config"
-        primary_dns   = ip_v4_blocks.value.primary_dns
-        secondary_dns = ip_v4_blocks.value.secondary_dns
-      }
+      #ip_v4_config {
+      #  gateway       = ip_v4_blocks.value.gateway
+      #  netmask       = ip_v4_blocks.value.netmask
+      #  object_type   = "ippool.IpV4Config"
+      #  primary_dns   = ip_v4_blocks.value.primary_dns
+      #  secondary_dns = ip_v4_blocks.value.secondary_dns
+      #}
       size = ip_v4_blocks.value.size
       to   = ip_v4_blocks.value.to
     }
@@ -37,13 +37,13 @@ resource "intersight_ippool_pool" "map" {
     for_each = { for v in each.value.ipv6_blocks : v.from => v }
     content {
       from = ip_v6_blocks.value.from
-      ip_v6_config {
-        gateway       = ip_v6_blocks.value.gateway
-        object_type   = "ippool.IpV6Config"
-        prefix        = ip_v6_blocks.value.prefix
-        primary_dns   = ip_v6_blocks.value.primary_dns
-        secondary_dns = ip_v6_blocks.value.secondary_dns
-      }
+      #ip_v6_config {
+      #  gateway       = ip_v6_blocks.value.gateway
+      #  object_type   = "ippool.IpV6Config"
+      #  prefix        = ip_v6_blocks.value.prefix
+      #  primary_dns   = ip_v6_blocks.value.primary_dns
+      #  secondary_dns = ip_v6_blocks.value.secondary_dns
+      #}
       size = ip_v6_blocks.value.size
       to   = ip_v6_blocks.value.to
     }

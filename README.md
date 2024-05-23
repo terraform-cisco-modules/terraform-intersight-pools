@@ -17,7 +17,7 @@ A Terraform module to configure Intersight Infrastructure Pools.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
-| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.47 |
+| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.41 |
 ## Providers
 
 | Name | Version |
@@ -38,7 +38,8 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_data_pools"></a> [data\_pools](#output\_data\_pools) | n/a |
-| <a name="output_reservations"></a> [reservations](#output\_reservations) | Moids of the Pool Reservations. |
+| <a name="output_name_prefix"></a> [name\_prefix](#output\_name\_prefix) | Name Prefix Outputs. |
+| <a name="output_name_suffix"></a> [name\_suffix](#output\_name\_suffix) | Name Suffix Outputs. |
 | <a name="output_ip"></a> [ip](#output\_ip) | Moids of the IP Pools. |
 | <a name="output_iqn"></a> [iqn](#output\_iqn) | Moids of the IQN Pools. |
 | <a name="output_mac"></a> [mac](#output\_mac) | Moids of the MAC Pools. |
@@ -46,6 +47,7 @@ No modules.
 | <a name="output_uuid"></a> [uuid](#output\_uuid) | Moids of the UUID Pools. |
 | <a name="output_wwnn"></a> [wwnn](#output\_wwnn) | Moids of the WWNN Pools. |
 | <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moids of the WWPN Pools. |
+| <a name="output_reservations"></a> [reservations](#output\_reservations) | Moids of the Pool Reservations. |
 ## Resources
 
 | Name | Type |

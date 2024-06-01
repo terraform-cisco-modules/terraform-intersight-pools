@@ -13,10 +13,11 @@ resource "intersight_iqnpool_pool" "map" {
   dynamic "iqn_suffix_blocks" {
     for_each = { for v in each.value.iqn_blocks : v.from => v }
     content {
-      from   = iqn_suffix_blocks.value.from
-      size   = iqn_suffix_blocks.value.size
-      suffix = iqn_suffix_blocks.value.suffix
-      to     = iqn_suffix_blocks.value.to
+      from        = iqn_suffix_blocks.value.from
+      object_type = "iqnpool.Block"
+      size        = iqn_suffix_blocks.value.size
+      suffix      = iqn_suffix_blocks.value.suffix
+      to          = iqn_suffix_blocks.value.to
     }
   }
   organization { moid = var.orgs[each.value.org] }

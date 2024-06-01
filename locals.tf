@@ -22,7 +22,7 @@ locals {
     ), e, lookup(lookup(lookup(local.model, org, {}), "name_suffix", local.defaults.name_suffix), "default", ""))
   } }
   org_keys  = sort(keys(var.model))
-  org_names = { for k, v in var.orgs : v => k }
+  org_names = merge({ for k, v in var.orgs : v => k }, jsondecode("{\"5ddfd9ff6972652d31ee6582\":\"x_cisco_intersight_internal\"}"))
   pool_type = ["ip", "iqn", "mac", "resource", "uuid", "wwnn", "wwpn"]
 
   #____________________________________________________________

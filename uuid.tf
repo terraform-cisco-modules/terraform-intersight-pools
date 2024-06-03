@@ -38,7 +38,7 @@ resource "intersight_uuidpool_reservation" "map" {
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.uuid.moids, pool.value) ? intersight_uuidpool_pool.map[pool.value].moid : local.pools_data["uuid"][pool.value].moid
+      moid = contains(local.pools.uuid.moids, pool.value) ? intersight_uuidpool_pool.map[pool.value].moid : local.pools_data.uuid[pool.value].moid
     }
   }
 }

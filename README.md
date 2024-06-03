@@ -17,12 +17,12 @@ A Terraform module to configure Intersight Infrastructure Pools.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
-| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.47 |
+| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.49 |
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.47 |
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.49 |
 ## Modules
 
 No modules.
@@ -38,8 +38,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_data_pools"></a> [data\_pools](#output\_data\_pools) | Moid's of the Pools that were not defined locally. |
-| <a name="output_name_prefix"></a> [name\_prefix](#output\_name\_prefix) | Name Prefix Outputs. |
-| <a name="output_name_suffix"></a> [name\_suffix](#output\_name\_suffix) | Name Suffix Outputs. |
 | <a name="output_ip"></a> [ip](#output\_ip) | Moids of the IP Pools. |
 | <a name="output_iqn"></a> [iqn](#output\_iqn) | Moids of the IQN Pools. |
 | <a name="output_mac"></a> [mac](#output\_mac) | Moids of the MAC Pools. |

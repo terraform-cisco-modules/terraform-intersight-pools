@@ -76,14 +76,12 @@ locals {
   #
   # Intersight Pool - Reservations
   #____________________________________________________________
-  reservations_loop_1 = flatten([for org in local.org_keys : [
-    for r in flatten([for v in flatten([for e in lookup(lookup(var.model[org], "profiles", {}), "server", []
-      ) : e.targets if lookup(e, "ignore_reservations", true) == false]) : lookup(v, "reservations", [])]
-      ) : merge(local.defaults.reservations, r, {
-        org       = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 0) : org
-        pool_name = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 1) : r.pool_name
-    })
-  ]])
+  reservations_loop_1 = flatten([for org in keys(var.orgs) : [for s in lookup(lookup(lookup(var.model, org, {}), "profiles", {}), "server", []) : [
+    for t in s.targets : [for r in lookup(t, "reservations", []) : merge(local.defaults.reservations, r, {
+      org       = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 0) : org
+      pool_name = length(regexall("/", r.pool_name)) > 0 ? element(split("/", r.pool_name), 1) : r.pool_name
+    })]] if lookup(s, "ignore_reservations", false) == false]
+  ])
   reservations = [for v in local.reservations_loop_1 : merge(v, {
     pool_name = "${v.org}/${local.npfx[v.org][v.identity_type]}${v.pool_name}${local.nsfx[v.org][v.identity_type]}"
   })]

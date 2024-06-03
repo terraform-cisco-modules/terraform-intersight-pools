@@ -77,7 +77,7 @@ resource "intersight_ippool_reservation" "map" {
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.ip.moids, pool.value) ? intersight_ippool_pool.map[pool.value].moid : local.pools_data["ip"][pool.value].moid
+      moid = contains(local.pools.ip.moids, pool.value) ? intersight_ippool_pool.map[pool.value].moid : local.pools_data.ip[pool.value].moid
     }
   }
 }

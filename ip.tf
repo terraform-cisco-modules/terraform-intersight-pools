@@ -57,10 +57,7 @@ resource "intersight_ippool_pool" "map" {
       secondary_dns = ip_v6_config.value.secondary_dns
     }
   }
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "tags" {
     for_each = { for v in each.value.tags : v.key => v }
     content {
@@ -76,14 +73,11 @@ resource "intersight_ippool_reservation" "map" {
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
   ip_type         = each.value.ip_type
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.ip.moids, pool.value) ? intersight_ippool_pool.map[pool.value].moid : local.pools_data["ip"][pool.value].moid
+      moid = contains(local.pools.ip.moids, pool.value) ? intersight_ippool_pool.map[pool.value].moid : local.pools_data.ip[pool.value].moid
     }
   }
 }

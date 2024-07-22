@@ -13,16 +13,14 @@ resource "intersight_iqnpool_pool" "map" {
   dynamic "iqn_suffix_blocks" {
     for_each = { for v in each.value.iqn_blocks : v.from => v }
     content {
-      from   = iqn_suffix_blocks.value.from
-      size   = iqn_suffix_blocks.value.size
-      suffix = iqn_suffix_blocks.value.suffix
-      to     = iqn_suffix_blocks.value.to
+      from        = iqn_suffix_blocks.value.from
+      object_type = "iqnpool.Block"
+      size        = iqn_suffix_blocks.value.size
+      suffix      = iqn_suffix_blocks.value.suffix
+      to          = iqn_suffix_blocks.value.to
     }
   }
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "tags" {
     for_each = { for v in each.value.tags : v.key => v }
     content {
@@ -37,14 +35,11 @@ resource "intersight_iqnpool_reservation" "map" {
   for_each        = { for v in local.reservations : "${v.pool_name}/${v.identity}" => v if v.identity_type == "iqn" }
   allocation_type = each.value.allocation_type # dynamic|static
   identity        = each.value.identity
-  organization {
-    moid        = var.orgs[each.value.organization]
-    object_type = "organization.Organization"
-  }
+  organization { moid = var.orgs[each.value.org] }
   dynamic "pool" {
     for_each = { for v in [each.value.pool_name] : v => v if each.value.allocation_type == "dynamic" }
     content {
-      moid = contains(local.pools.iqn.moids, pool.value) ? intersight_iqnpool_pool.map[pool.value].moid : local.pools_data["iqn"][pool.value].moid
+      moid = contains(local.pools.iqn.moids, pool.value) ? intersight_iqnpool_pool.map[pool.value].moid : local.pools_data.iqn[pool.value].moid
     }
   }
 }

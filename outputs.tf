@@ -10,20 +10,6 @@ output "data_pools" {
 
 #__________________________________________________________
 #
-# Name Prefix/Suffix Outputs
-#__________________________________________________________
-
-output "name_prefix" {
-  description = "Name Prefix Outputs."
-  value       = local.name_prefix
-}
-output "name_suffix" {
-  description = "Name Suffix Outputs."
-  value       = local.name_suffix
-}
-
-#__________________________________________________________
-#
 # Pools Outputs
 #__________________________________________________________
 
@@ -63,5 +49,5 @@ output "wwpn" {
 
 output "reservations" {
   description = "Moids of the Pool Reservations."
-  value       = { for v in local.pool_types : v => local.reservation_results[v] if length(local.reservation_results[v]) > 0 }
+  value       = { for k in keys(local.reservation_results) : k => local.reservation_results[k] if length(local.reservation_results[k]) > 0 }
 }

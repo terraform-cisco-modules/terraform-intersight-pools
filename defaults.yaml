@@ -27,7 +27,7 @@ pools:
       to: null
     ipv6_configuration:
       gateway: '**REQUIRED**'
-      prefix: 0 # REQUIRED
+      prefix: 0 # **REQUIRED**
       primary_dns: '::'
       #primary_dns: '2620:119:53::53'
       secondary_dns: '::'

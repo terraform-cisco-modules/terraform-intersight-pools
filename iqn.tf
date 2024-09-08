@@ -14,7 +14,7 @@ resource "intersight_iqnpool_pool" "map" {
     for_each = { for v in each.value.iqn_blocks : v.from => v }
     content {
       from        = iqn_suffix_blocks.value.from
-      object_type = "iqnpool.Block"
+      object_type = "iqnpool.IqnSuffixBlock"
       size        = iqn_suffix_blocks.value.size
       suffix      = iqn_suffix_blocks.value.suffix
       to          = iqn_suffix_blocks.value.to

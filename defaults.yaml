@@ -8,614 +8,86 @@ policies:
     server_pool_qualification: ''
   server_pool_qualification:
     description: ''
-    blade_server_qualifiers:
-      asset_tags: []
-      blade_pids: []
-        # UCSB-B200-M5
-        # UCSB-B200-M6
-        # UCSB-B480-M5
-        # UCSX-210C-M6
-        # UCSX-210C-M7
-        # UCSX-215C-M8
-        # UCSX-410C-M7
-        # UCSBX-210C-M6 # Incorrect SKU
-      chassis_pids: []
-        # N20-C6508
-        # UCSC-C3X60-BASE
-        # UCSB-5108-AC2
-        # UCSB-5108-DC
-        # UCSB-5108-DC2
-        # UCSBX-9508 # Incorrect SKU
-        # UCSX-9508
-      user_labels: []
     domain_qualifiers:
       domain_names: []
       fabric_interconnect_pids: []
-        # UCS-FI-6454
-        # UCS-FI-64108
-        # UCS-FI-6536
-        # UCSX-S9108-100G
     hardware_qualifiers:
-      cpu_cores_minimum: 1 # 1-99999
-      cpu_cores_maximum: 99999 # <=99999
-      cpu_pids: []
-        # UCS-CPU-3104
-        # UCS-CPU-3106
-        # UCS-CPU-4108
-        # UCS-CPU-4110
-        # UCS-CPU-4112
-        # UCS-CPU-4114
-        # UCS-CPU-4116
-        # UCS-CPU-5115
-        # UCS-CPU-5117
-        # UCS-CPU-5118
-        # UCS-CPU-5120
-        # UCS-CPU-5122
-        # UCS-CPU-6126
-        # UCS-CPU-6128
-        # UCS-CPU-6130
-        # UCS-CPU-6132
-        # UCS-CPU-6134
-        # UCS-CPU-6134M
-        # UCS-CPU-6136
-        # UCS-CPU-6138
-        # UCS-CPU-6138T
-        # UCS-CPU-6140
-        # UCS-CPU-6140M
-        # UCS-CPU-6144
-        # UCS-CPU-6146
-        # UCS-CPU-6148
-        # UCS-CPU-6150
-        # UCS-CPU-6152
-        # UCS-CPU-6154
-        # UCS-CPU-7251
-        # UCS-CPU-7261
-        # UCS-CPU-7281
-        # UCS-CPU-7301
-        # UCS-CPU-7351
-        # UCS-CPU-7351P
-        # UCS-CPU-7401
-        # UCS-CPU-7401P
-        # UCS-CPU-7451
-        # UCS-CPU-7501
-        # UCS-CPU-7551
-        # UCS-CPU-7551P
-        # UCS-CPU-7601
-        # UCS-CPU-8153
-        # UCS-CPU-8156
-        # UCS-CPU-8158
-        # UCS-CPU-8160
-        # UCS-CPU-8160M
-        # UCS-CPU-8160T
-        # UCS-CPU-8164
-        # UCS-CPU-8168
-        # UCS-CPU-8170
-        # UCS-CPU-8170M
-        # UCS-CPU-8176
-        # UCS-CPU-8176M
-        # UCS-CPU-8180
-        # UCS-CPU-8180M
-        # UCS-CPU-A7232P
-        # UCS-CPU-A7252
-        # UCS-CPU-A7262
-        # UCS-CPU-A7272
-        # UCS-CPU-A7282
-        # UCS-CPU-A72F3
-        # UCS-CPU-A7302
-        # UCS-CPU-A7302P
-        # UCS-CPU-A7313
-        # UCS-CPU-A7313P
-        # UCS-CPU-A7343
-        # UCS-CPU-A7352
-        # UCS-CPU-A7373X
-        # UCS-CPU-A73F3
-        # UCS-CPU-A7402
-        # UCS-CPU-A7402P
-        # UCS-CPU-A7413
-        # UCS-CPU-A7443
-        # UCS-CPU-A7443P
-        # UCS-CPU-A7452
-        # UCS-CPU-A7453
-        # UCS-CPU-A7473X
-        # UCS-CPU-A74F3
-        # UCS-CPU-A7502
-        # UCS-CPU-A7502P
-        # UCS-CPU-A7513
-        # UCS-CPU-A7532
-        # UCS-CPU-A7543
-        # UCS-CPU-A7543P
-        # UCS-CPU-A7552
-        # UCS-CPU-A7573X
-        # UCS-CPU-A75F3
-        # UCS-CPU-A7643
-        # UCS-CPU-A7662
-        # UCS-CPU-A7663
-        # UCS-CPU-A7702
-        # UCS-CPU-A7702P
-        # UCS-CPU-A7713
-        # UCS-CPU-A7713P
-        # UCS-CPU-A7763
-        # UCS-CPU-A7773X
-        # UCS-CPU-A7F32
-        # UCS-CPU-A9015
-        # UCS-CPU-A9115
-        # UCS-CPU-A9124
-        # UCS-CPU-A9135
-        # UCS-CPU-A9174F
-        # UCS-CPU-A9175F
-        # UCS-CPU-A9184X
-        # UCS-CPU-A9224
-        # UCS-CPU-A9254
-        # UCS-CPU-A9255
-        # UCS-CPU-A9274F
-        # UCS-CPU-A9275F
-        # UCS-CPU-A9334
-        # UCS-CPU-A9335
-        # UCS-CPU-A9354
-        # UCS-CPU-A9354P
-        # UCS-CPU-A9355
-        # UCS-CPU-A9355P
-        # UCS-CPU-A9365
-        # UCS-CPU-A9374F
-        # UCS-CPU-A9375F
-        # UCS-CPU-A9384X
-        # UCS-CPU-A9454
-        # UCS-CPU-A9454P
-        # UCS-CPU-A9455
-        # UCS-CPU-A9455P
-        # UCS-CPU-A9474F
-        # UCS-CPU-A9475F
-        # UCS-CPU-A9534
-        # UCS-CPU-A9554P
-        # UCS-CPU-A9555
-        # UCS-CPU-A9555P
-        # UCS-CPU-A9565
-        # UCS-CPU-A9575F
-        # UCS-CPU-A9634
-        # UCS-CPU-A9654
-        # UCS-CPU-A9654P
-        # UCS-CPU-A9655
-        # UCS-CPU-A9655P
-        # UCS-CPU-A9734
-        # UCS-CPU-A9745
-        # UCS-CPU-A9754
-        # UCS-CPU-A9755
-        # UCS-CPU-A9825
-        # UCS-CPU-A9845
-        # UCS-CPU-A9965
-        # UCS-CPU-A99684X
-        # UCS-CPU-I3204
-        # UCS-CPU-I3206R
-        # UCS-CPU-I3408U
-        # UCS-CPU-I3508U
-        # UCS-CPU-I4208
-        # UCS-CPU-I4208R
-        # UCS-CPU-I4210
-        # UCS-CPU-I4210R
-        # UCS-CPU-I4214
-        # UCS-CPU-I4214R
-        # UCS-CPU-I4214Y
-        # UCS-CPU-I4215
-        # UCS-CPU-I4215R
-        # UCS-CPU-I4216
-        # UCS-CPU-I4216R
-        # UCS-CPU-I4309Y
-        # UCS-CPU-I4310
-        # UCS-CPU-I4310T
-        # UCS-CPU-I4314
-        # UCS-CPU-I4316
-        # UCS-CPU-I4410T
-        # UCS-CPU-I4410Y
-        # UCS-CPU-I4416+
-        # UCS-CPU-I4509Y
-        # UCS-CPU-I4510
-        # UCS-CPU-I4510T
-        # UCS-CPU-I4514Y
-        # UCS-CPU-I4516Y+
-        # UCS-CPU-I5215
-        # UCS-CPU-I5215L
-        # UCS-CPU-I5215M
-        # UCS-CPU-I5215R
-        # UCS-CPU-I5217
-        # UCS-CPU-I5218
-        # UCS-CPU-I5218B
-        # UCS-CPU-I5218N
-        # UCS-CPU-I5218R
-        # UCS-CPU-I5220
-        # UCS-CPU-I5220R
-        # UCS-CPU-I5220S
-        # UCS-CPU-I5222
-        # UCS-CPU-I5315Y
-        # UCS-CPU-I5317
-        # UCS-CPU-I5318N
-        # UCS-CPU-I5318S
-        # UCS-CPU-I5318Y
-        # UCS-CPU-I5320
-        # UCS-CPU-I5320T
-        # UCS-CPU-I5411N
-        # UCS-CPU-I5412U
-        # UCS-CPU-I5415+
-        # UCS-CPU-I5416S
-        # UCS-CPU-I5418N
-        # UCS-CPU-I5418Y
-        # UCS-CPU-I5420+
-        # UCS-CPU-I5512U
-        # UCS-CPU-I5515+
-        # UCS-CPU-I5520+
-        # UCS-CPU-I6222V
-        # UCS-CPU-I6226
-        # UCS-CPU-I6226R
-        # UCS-CPU-I6230
-        # UCS-CPU-I6230N
-        # UCS-CPU-I6230R
-        # UCS-CPU-I6234
-        # UCS-CPU-I6238
-        # UCS-CPU-I6238L
-        # UCS-CPU-I6238M
-        # UCS-CPU-I6238R
-        # UCS-CPU-I6240
-        # UCS-CPU-I6240L
-        # UCS-CPU-I6240M
-        # UCS-CPU-I6240R
-        # UCS-CPU-I6240Y
-        # UCS-CPU-I6242
-        # UCS-CPU-I6242R
-        # UCS-CPU-I6244
-        # UCS-CPU-I6246
-        # UCS-CPU-I6246R
-        # UCS-CPU-I6248
-        # UCS-CPU-I6248R
-        # UCS-CPU-I6250
-        # UCS-CPU-I6252
-        # UCS-CPU-I6252N
-        # UCS-CPU-I6254
-        # UCS-CPU-I6256
-        # UCS-CPU-I6258R
-        # UCS-CPU-I6262V
-        # UCS-CPU-I6312U
-        # UCS-CPU-I6314U
-        # UCS-CPU-I6326
-        # UCS-CPU-I6330
-        # UCS-CPU-I6330N
-        # UCS-CPU-I6334
-        # UCS-CPU-I6336Y
-        # UCS-CPU-I6338
-        # UCS-CPU-I6338N
-        # UCS-CPU-I6338T
-        # UCS-CPU-I6342
-        # UCS-CPU-I6346
-        # UCS-CPU-I6348
-        # UCS-CPU-I6354
-        # UCS-CPU-I6414U
-        # UCS-CPU-I6416H
-        # UCS-CPU-I6418H
-        # UCS-CPU-I6421N
-        # UCS-CPU-I6426Y
-        # UCS-CPU-I6428N
-        # UCS-CPU-I6430
-        # UCS-CPU-I6434
-        # UCS-CPU-I6434H
-        # UCS-CPU-I6438M
-        # UCS-CPU-I6438N
-        # UCS-CPU-I6438Y+
-        # UCS-CPU-I6442Y
-        # UCS-CPU-I6444Y
-        # UCS-CPU-I6448H
-        # UCS-CPU-I6448Y
-        # UCS-CPU-I6454S
-        # UCS-CPU-I6526Y
-        # UCS-CPU-I6530
-        # UCS-CPU-I6538N
-        # UCS-CPU-I6538Y+
-        # UCS-CPU-I6542Y
-        # UCS-CPU-I6544Y
-        # UCS-CPU-I6548N
-        # UCS-CPU-I6548Y+
-        # UCS-CPU-I6554
-        # UCS-CPU-I6554S
-        # UCS-CPU-I8253
-        # UCS-CPU-I8260
-        # UCS-CPU-I8260L
-        # UCS-CPU-I8260M
-        # UCS-CPU-I8260Y
-        # UCS-CPU-I8268
-        # UCS-CPU-I8270
-        # UCS-CPU-I8276
-        # UCS-CPU-I8276L
-        # UCS-CPU-I8276M
-        # UCS-CPU-I8280
-        # UCS-CPU-I8280L
-        # UCS-CPU-I8280M
-        # UCS-CPU-I8351N
-        # UCS-CPU-I8352M
-        # UCS-CPU-I8352S
-        # UCS-CPU-I8352V
-        # UCS-CPU-I8352Y
-        # UCS-CPU-I8358
-        # UCS-CPU-I8358P
-        # UCS-CPU-I8360Y
-        # UCS-CPU-I8362
-        # UCS-CPU-I8368
-        # UCS-CPU-I8368Q
-        # UCS-CPU-I8380
-        # UCS-CPU-I8444H
-        # UCS-CPU-I8450H
-        # UCS-CPU-I8452Y
-        # UCS-CPU-I8454H
-        # UCS-CPU-I8458P
-        # UCS-CPU-I8460H
-        # UCS-CPU-I8460Y+
-        # UCS-CPU-I8461V
-        # UCS-CPU-I8462Y+
-        # UCS-CPU-I8468
-        # UCS-CPU-I8468H
-        # UCS-CPU-I8468V
-        # UCS-CPU-I8470
-        # UCS-CPU-I8470N
-        # UCS-CPU-I8471N
-        # UCS-CPU-I8480+
-        # UCS-CPU-I8490H
-        # UCS-CPU-I8558
-        # UCS-CPU-I8558U
-        # UCS-CPU-I8562Y+
-        # UCS-CPU-I8568Y+
-        # UCS-CPU-I8570
-        # UCS-CPU-I8571N
-        # UCS-CPU-I8580
-        # UCS-CPU-I8581V
-        # UCS-CPU-I8592+
-        # UCS-CPU-I8592V
-        # UCSX-CPU-A9015
-        # UCSX-CPU-A9115
-        # UCSX-CPU-A9124
-        # UCSX-CPU-A9135
-        # UCSX-CPU-A9174F
-        # UCSX-CPU-A9175F
-        # UCSX-CPU-A9184X
-        # UCSX-CPU-A9224
-        # UCSX-CPU-A9254
-        # UCSX-CPU-A9255
-        # UCSX-CPU-A9274F
-        # UCSX-CPU-A9275F
-        # UCSX-CPU-A9334
-        # UCSX-CPU-A9335
-        # UCSX-CPU-A9354
-        # UCSX-CPU-A9354P
-        # UCSX-CPU-A9355
-        # UCSX-CPU-A9355P
-        # UCSX-CPU-A9365
-        # UCSX-CPU-A9374F
-        # UCSX-CPU-A9375F
-        # UCSX-CPU-A9384X
-        # UCSX-CPU-A9454
-        # UCSX-CPU-A9454P
-        # UCSX-CPU-A9455
-        # UCSX-CPU-A9455P
-        # UCSX-CPU-A9474F
-        # UCSX-CPU-A9475F
-        # UCSX-CPU-A9534
-        # UCSX-CPU-A9535
-        # UCSX-CPU-A9554
-        # UCSX-CPU-A9554P
-        # UCSX-CPU-A9555
-        # UCSX-CPU-A9555P
-        # UCSX-CPU-A9565
-        # UCSX-CPU-A9575F
-        # UCSX-CPU-A9634
-        # UCSX-CPU-A9645
-        # UCSX-CPU-A9654
-        # UCSX-CPU-A9654P
-        # UCSX-CPU-A9655
-        # UCSX-CPU-A9655P
-        # UCSX-CPU-A9684X
-        # UCSX-CPU-A9734
-        # UCSX-CPU-A9745
-        # UCSX-CPU-A9754
-        # UCSX-CPU-A9755
-        # UCSX-CPU-A9825
-        # UCSX-CPU-A9845
-        # UCSX-CPU-A9965
-        # UCSX-CPU-I3408U
-        # UCSX-CPU-I3508U
-        # UCSX-CPU-I4309Y
-        # UCSX-CPU-I4310
-        # UCSX-CPU-I4310T
-        # UCSX-CPU-I4314
-        # UCSX-CPU-I4316
-        # UCSX-CPU-I4410T
-        # UCSX-CPU-I4410Y
-        # UCSX-CPU-I4416+
-        # UCSX-CPU-I4509Y
-        # UCSX-CPU-I4510
-        # UCSX-CPU-I4510T
-        # UCSX-CPU-I4514Y
-        # UCSX-CPU-I4516Y+
-        # UCSX-CPU-I5315Y
-        # UCSX-CPU-I5317
-        # UCSX-CPU-I5318N
-        # UCSX-CPU-I5318S
-        # UCSX-CPU-I5318Y
-        # UCSX-CPU-I5320
-        # UCSX-CPU-I5320T
-        # UCSX-CPU-I5411N
-        # UCSX-CPU-I5412U
-        # UCSX-CPU-I5415+
-        # UCSX-CPU-I5416S
-        # UCSX-CPU-I5418N
-        # UCSX-CPU-I5418Y
-        # UCSX-CPU-I5420+
-        # UCSX-CPU-I5512U
-        # UCSX-CPU-I5515+
-        # UCSX-CPU-I5520+
-        # UCSX-CPU-I6312U
-        # UCSX-CPU-I6314U
-        # UCSX-CPU-I6326
-        # UCSX-CPU-I6330
-        # UCSX-CPU-I6330N
-        # UCSX-CPU-I6334
-        # UCSX-CPU-I6336Y
-        # UCSX-CPU-I6338
-        # UCSX-CPU-I6338N
-        # UCSX-CPU-I6338T
-        # UCSX-CPU-I6342
-        # UCSX-CPU-I6346
-        # UCSX-CPU-I6348
-        # UCSX-CPU-I6354
-        # UCSX-CPU-I6414U
-        # UCSX-CPU-I6416H
-        # UCSX-CPU-I6418H
-        # UCSX-CPU-I6421N
-        # UCSX-CPU-I6426Y
-        # UCSX-CPU-I6428N
-        # UCSX-CPU-I6430
-        # UCSX-CPU-I6434
-        # UCSX-CPU-I6434H
-        # UCSX-CPU-I6438M
-        # UCSX-CPU-I6438N
-        # UCSX-CPU-I6438Y+
-        # UCSX-CPU-I6442Y
-        # UCSX-CPU-I6444Y
-        # UCSX-CPU-I6448H
-        # UCSX-CPU-I6448Y
-        # UCSX-CPU-I6454S
-        # UCSX-CPU-I6526Y
-        # UCSX-CPU-I6530
-        # UCSX-CPU-I6534
-        # UCSX-CPU-I6538N
-        # UCSX-CPU-I6538Y+
-        # UCSX-CPU-I6542Y
-        # UCSX-CPU-I6544Y
-        # UCSX-CPU-I6548N
-        # UCSX-CPU-I6548Y+
-        # UCSX-CPU-I6554S
-        # UCSX-CPU-I8351N
-        # UCSX-CPU-I8352M
-        # UCSX-CPU-I8352S
-        # UCSX-CPU-I8352V
-        # UCSX-CPU-I8352Y
-        # UCSX-CPU-I8358
-        # UCSX-CPU-I8358P
-        # UCSX-CPU-I8360Y
-        # UCSX-CPU-I8362
-        # UCSX-CPU-I8368
-        # UCSX-CPU-I8380
-        # UCSX-CPU-I8444H
-        # UCSX-CPU-I8450H
-        # UCSX-CPU-I8452Y
-        # UCSX-CPU-I8454H
-        # UCSX-CPU-I8458P
-        # UCSX-CPU-I8460H
-        # UCSX-CPU-I8460Y+
-        # UCSX-CPU-I8461V
-        # UCSX-CPU-I8462Y+
-        # UCSX-CPU-I8468
-        # UCSX-CPU-I8468H
-        # UCSX-CPU-I8468V
-        # UCSX-CPU-I8470
-        # UCSX-CPU-I8470N
-        # UCSX-CPU-I8471N
-        # UCSX-CPU-I8480+
-        # UCSX-CPU-I8490H
-        # UCSX-CPU-I8558
-        # UCSX-CPU-I8558P
-        # UCSX-CPU-I8558U
-        # UCSX-CPU-I8562Y+
-        # UCSX-CPU-I8568Y+
-        # UCSX-CPU-I8570
-        # UCSX-CPU-I8571N
-        # UCSX-CPU-I8580
-        # UCSX-CPU-I8581V
-        # UCSX-CPU-I8592+
-        # UCSX-CPU-I8592V
-      cpu_speed_minimum: 1 # 1-99
-      cpu_speed_maximum: 99 # <= 99
-      cpu_vendor: null # AMD or Intel(R) Corporation or null
-      gpu_qualifier: # all_servers, servers_with_gpus, servers_without_gpus
-      gpu_number_minimum: 1 # 1-16
-      gpu_number_maximum: 16 # <= 16
-      gpu_pids: []
-        # UCSB-GPU-P6
-        # UCSC-GPU-7150X2
-        # UCSC-GPU-A10
-        # UCSC-GPU-A100
-        # UCSC-GPU-A100-80
-        # UCSC-GPU-A16
-        # UCSC-GPU-A30
-        # UCSC-GPU-A40
-        # UCSC-GPU-FLEX140
-        # UCSC-GPU-FLEX170
-        # UCSC-GPU-H100-80
-        # UCSC-GPU-H100-NVL
-        # UCSC-GPU-L4
-        # UCSC-GPU-L40
-        # UCSC-GPU-L40S
-        # UCSC-GPU-M10
-        # UCSC-GPU-M60
-        # UCSC-GPU-MI210
-        # UCSC-GPU-P100-12G
-        # UCSC-GPU-P100-16G
-        # UCSC-GPU-P4
-        # UCSC-GPU-P40
-        # UCSC-GPU-RTX6000
-        # UCSC-GPU-RTX8000
-        # UCSC-GPU-T4-16
-        # UCSC-GPU-V100
-        # UCSC-GPU-V100-32G
-        # UCSC-GPU-V340
-        # UCSC-GPUV100SXM32
-        # UCSC-P-MI210
-        # UCSX-GPU-L4-MEZZ
-        # UCSX-GPU-T4-MEZZ
-        # UCSX-GPU-FLX140MZ
-        # V100-SXM2-16GB
-      gpu_vendor: null # AMD, Intel, NVIDIA
-      memory_capacity_minimum: 1 # 1-99999
-      memory_capacity_maximum: 99999 # <= 99999
-      memory_units_minimum: 1 # 1-99999
-      memory_units_maximum: 99999 # <= 99999
-      network_adapters_minimum: 1 # 1-16
-      network_adapters_maximum: 16 # <= 16
+      cpu:
+        number_of_cores:
+          minimum: 1 # 1-99999
+          maximum: 99999 # <=99999
+        pids: []
+        speed:
+          minimum: 1 # 1-99
+          maximum: 99999 # <=99
+        vendor: "" # AMD or Intel(R) Corporation or null
+      gpu:
+        evaluation_type: # ServerWithGpu, ServerWithoutGPU, Unspecified
+        number_of_gpus:
+          minimum: 1 # 1-16
+          maximum: 16 # <= 16
+        pids: []
+        vendor: null # AMD, Intel, NVIDIA
+      memory:
+        capacity:
+          minimum: 1 # 1-99999
+          maximum: 99999 # <= 99999
+        number_of_units:
+          minimum: 1 # 1-99999
+          maximum: 99999 # <= 99999
+      network_adapter:
+        number_of_network_adapters:
+          minimum: 1 # 1-16
+          maximum: 16 # <= 16
     name: '**REQUIRED**'
-    rack_server_qualifiers:
-      asset_tags: []
-      rack_ids: []
-        # from: 0
-        # to: 0
-      rack_pids: []
-        # UCSC-C220-M5 # Not Valid
-        # UCSC-C220-M5L
-        # UCSC-C220-M5SN
-        # UCSC-C220-M5SX
-        # UCSC-C220-M6 # Not Valid
-        # UCSC-C220-M6N
-        # UCSC-C220-M6S
-        # UCSC-C220-M7N
-        # UCSC-C220-M7S
-        # UCSC-C225-M6 # Not Valid
-        # UCSC-C225-M6N
-        # UCSC-C225-M6S
-        # UCSC-C225-M8N
-        # UCSC-C225-M8S
-        # UCSC-C240-M5 # Not Valid
-        # UCSC-C240-M5L
-        # UCSC-C240-M5S
-        # UCSC-C240-M5SD
-        # UCSC-C240-M5SN
-        # UCSC-C240-M5SX
-        # UCSC-C240-M6 # Not Valid
-        # UCSC-C240-M6L
-        # UCSC-C240-M6N
-        # UCSC-C240-M6S
-        # UCSC-C240-M6SN
-        # UCSC-C240-M6SX
-        # UCSC-C240-M7SN
-        # UCSC-C240-M7SX
-        # UCSC-C245-M6 # Not Valid
-        # UCSC-C245-M6SX
-        # UCSC-C245-M8SX
-        # UCSC-C480-M5
-        # UCSC-C480-M5ML8 # Missing
-      user_labels: []
+    server_qualifiers:
+      blade_server:
+        asset_tags: []
+        blade_pids: []
+          # UCSBX-210C-M6 # Incorrect SKU
+        chassis_pids: []
+          # UCSBX-9508 # Incorrect SKU
+        user_labels: []
+      rack_server:
+        asset_tags: []
+        rack_ids: []
+          # from: 0
+          # to: 0
+        rack_pids: []
+          # UCSC-C220-M5 # Not Valid
+          # UCSC-C220-M5L
+          # UCSC-C220-M5SN
+          # UCSC-C220-M5SX
+          # UCSC-C220-M6 # Not Valid
+          # UCSC-C220-M6N
+          # UCSC-C220-M6S
+          # UCSC-C220-M7N
+          # UCSC-C220-M7S
+          # UCSC-C225-M6 # Not Valid
+          # UCSC-C225-M6N
+          # UCSC-C225-M6S
+          # UCSC-C225-M8N
+          # UCSC-C225-M8S
+          # UCSC-C240-M5 # Not Valid
+          # UCSC-C240-M5L
+          # UCSC-C240-M5S
+          # UCSC-C240-M5SD
+          # UCSC-C240-M5SN
+          # UCSC-C240-M5SX
+          # UCSC-C240-M6 # Not Valid
+          # UCSC-C240-M6L
+          # UCSC-C240-M6N
+          # UCSC-C240-M6S
+          # UCSC-C240-M6SN
+          # UCSC-C240-M6SX
+          # UCSC-C240-M7SN
+          # UCSC-C240-M7SX
+          # UCSC-C245-M6 # Not Valid
+          # UCSC-C245-M6SX
+          # UCSC-C245-M8SX
+          # UCSC-C480-M5
+          # UCSC-C480-M5ML8 # Missing
+        user_labels: []
     tag_qualifiers: # resource.Tag
       chassis_tags: [] # key/value
       domain_profile_tags: [] # key/value

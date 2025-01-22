@@ -15,31 +15,41 @@ output "data_pools" {
 
 output "ip" {
   description = "Moids of the IP Pools."
-  value       = { for v in sort(keys(intersight_ippool_pool.map)) : v => intersight_ippool_pool.map[v].moid }
+  value       = { for k, v in intersight_ippool_pool.map : k => v.moid }
 }
 output "iqn" {
   description = "Moids of the IQN Pools."
-  value       = { for v in sort(keys(intersight_iqnpool_pool.map)) : v => intersight_iqnpool_pool.map[v].moid }
+  value       = { for k, v in intersight_iqnpool_pool.map : k => v.moid }
 }
 output "mac" {
   description = "Moids of the MAC Pools."
-  value       = { for v in sort(keys(intersight_macpool_pool.map)) : v => intersight_macpool_pool.map[v].moid }
+  value       = { for k, v in intersight_macpool_pool.map : k => v.moid }
 }
 output "resource" {
   description = "Moids of the Resource Pools."
-  value       = { for v in sort(keys(intersight_resourcepool_pool.map)) : v => intersight_resourcepool_pool.map[v].moid }
+  value       = { for k, v in intersight_resourcepool_pool.map : k => v.moid }
 }
 output "uuid" {
   description = "Moids of the UUID Pools."
-  value       = { for v in sort(keys(intersight_uuidpool_pool.map)) : v => intersight_uuidpool_pool.map[v].moid }
+  value       = { for k, v in intersight_uuidpool_pool.map : k => v.moid }
 }
 output "wwnn" {
   description = "Moids of the WWNN Pools."
-  value       = { for v in sort(keys(intersight_fcpool_pool.wwnn)) : v => intersight_fcpool_pool.wwnn[v].moid }
+  value       = { for k, v in intersight_fcpool_pool.wwnn : k => v.moid }
 }
 output "wwpn" {
   description = "Moids of the WWPN Pools."
-  value       = { for v in sort(keys(intersight_fcpool_pool.wwpn)) : v => intersight_fcpool_pool.wwpn[v].moid }
+  value       = { for k, v in intersight_fcpool_pool.wwpn : k => v.moid }
+}
+
+#__________________________________________________________
+#
+# Server Pool Qualification Policy
+#__________________________________________________________
+
+output "server_pool_qualification" {
+  description = "Moids of the Server Pool Qualfication Policies."
+  value = {for k, v in intersight_resourcepool_qualification_policy.map : k => v.moid }
 }
 
 #__________________________________________________________

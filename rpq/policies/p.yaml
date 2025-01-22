@@ -1,0 +1,38 @@
+default:
+  policies:
+    server_pool_qualification:
+      - description: dummy
+        #domain_qualifiers:
+        #  fabric_interconnect_pids:
+        #    - UCS-FI-6454
+        hardware_qualifiers:
+          cpu:
+            number_of_cores:
+              minimum: 24
+              maximum: 48
+        name: Example
+        server_qualifiers:
+          blade_server:
+            chassis_slot_qualifier:
+              - chassis_ids:
+                  from: 1
+                  to: 5
+                slot_ids:
+                  - from: 1
+                    to: 3
+                  - from: 5
+                    to: 6
+          rack_server:
+            rack_ids:
+              - from: 1
+                to: 5
+        #tag_qualifiers:
+        #  chassis_tags:
+        #    - key: dummy1
+        #      value: dummy2
+        #  #domain_profile_tags:
+        #  #  - key: dummy3
+        #  #    value: dummy4
+        #  server_tags:
+        #    - key: dummy5
+        #      value: dummy6

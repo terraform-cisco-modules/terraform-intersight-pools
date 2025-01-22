@@ -1,0 +1,8 @@
+interfaces:
+  - identifier: Ethernet1/1/3
+    description: testing
+    spanning_tree_port_type: edge trunk # edge, edge trunk, network, normal
+    spanning_tree_bpduguard: enable
+    switchport: true
+    switchport_mode: trunk # access, dot1q-tunnel, trunk
+    switchport_trunk_allowed_vlan: 121,999

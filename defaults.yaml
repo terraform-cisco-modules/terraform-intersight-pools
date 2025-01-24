@@ -177,9 +177,11 @@ pools:
     assignment_order: 'sequential'
     description: ''
     name: '**REQUIRED**'
-    pool_type: Static
+    pool_type: Dynamic
     resource_type: Server
-    server_type: Blades
+    server_pool_qualification_policies: []
+    static_resource_selection: []
+    target_platform: FIAttached
     tags:
       key: ''
       value: ''

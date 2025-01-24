@@ -1,7 +1,7 @@
 #____________________________________________________________
 #
-# Intersight IP Pool Resource
-# GUI Location: Pools > Create Pool
+# Intersight Server Pool Qualfication Policy Resource
+# GUI Location: Policies > Create Pool > Server Pool Qualfication
 #____________________________________________________________
 
 resource "intersight_resourcepool_qualification_policy" "map" {

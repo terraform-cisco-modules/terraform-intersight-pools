@@ -3,8 +3,9 @@ locals {
   #
   # local defaults and name suffix/prefix
   #____________________________________________________________
-  defaults = yamldecode(file("${path.module}/defaults.yaml")).pools
-  model    = { for org in local.org_keys : org => lookup(var.model[org], "pools", {}) }
+  defaults  = yamldecode(file("${path.module}/defaults.yaml")).pools
+  model     = { for org in local.org_keys : org => lookup(var.model[org], "pools", {}) }
+  pool_type = ["ip", "iqn", "mac", "resource", "uuid", "wwnn", "wwpn"]
   name_prefix = { for org in local.org_keys : org => {
     for e in local.pool_type : e => lookup(lookup(local.model[org], "name_prefix", {}
     ), e, lookup(lookup(local.model[org], "name_prefix", local.defaults.name_prefix), "default", ""))
@@ -21,12 +22,11 @@ locals {
     for e in local.pool_type : e => lookup(lookup(lookup(local.model, org, {}), "name_suffix", {}
     ), e, lookup(lookup(lookup(local.model, org, {}), "name_suffix", local.defaults.name_suffix), "default", ""))
   } }
-  org_keys  = sort(keys(var.model))
-  org_names = merge({ for k, v in var.orgs : v => k }, jsondecode("{\"5ddfd9ff6972652d31ee6582\":\"x_cisco_intersight_internal\"}"))
+  org_keys        = sort(keys(var.model))
+  org_names       = merge({ for k, v in var.orgs : v => k }, jsondecode("{\"5ddfd9ff6972652d31ee6582\":\"x_cisco_intersight_internal\"}"))
   policy_defaults = yamldecode(file("${path.module}/defaults.yaml")).policies
   policies_model  = { for org in local.org_keys : org => lookup(var.model[org], "policies", {}) }
   policy_names    = ["server_pool_qualification"]
-  pool_type = ["ip", "iqn", "mac", "resource", "uuid", "wwnn", "wwpn"]
   ppfx = { for org in keys(var.orgs) : org => {
     for e in local.policy_names : e => lookup(lookup(lookup(lookup(var.model, org, {}), "policies", {}), "name_prefix", {}
     ), e, lookup(lookup(lookup(lookup(var.model, org, {}), "policies", {}), "name_prefix", local.policy_defaults.name_prefix), "default", ""))
@@ -104,6 +104,14 @@ locals {
     wwnn = distinct(compact([for v in local.reservations : v.pool_name if v.identity_type == "wwnn"]))
     wwpn = distinct(compact([for v in local.reservations : v.pool_name if v.identity_type == "wwpn"]))
   }
+  pp = {
+    server_pool_qualification = distinct(compact(flatten([for v in local.resource : [for e in v.server_pool_qualification_policies : e if element(split("/", e), 1) != "UNUSED"]])))
+  }
+  policies = {
+    server_pool_qualification = { keys = keys(local.server_pool_qualification), object = "resourcepool.QualificationPolicy" }
+  }
+  # policy_types = []
+  policy_types = ["server_pool_qualification"]
   pools = {
     ip   = { moids = keys(local.ip), object = "ippool.Pool" }
     iqn  = { moids = keys(local.iqn), object = "iqnpool.Pool" }
@@ -112,9 +120,17 @@ locals {
     wwnn = { moids = keys(local.wwnn), object = "fcpool.Pool" }
     wwpn = { moids = keys(local.wwpn), object = "fcpool.Pool" }
   }
-  pool_types = ["ip", "iqn", "mac", "uuid", "wwnn", "wwpn"]
+  pool_types    = ["ip", "iqn", "mac", "uuid", "wwnn", "wwpn"]
+  data_policies = { for e in local.policy_types : e => [for v in local.pp[e] : element(split("/", v), 1) if contains(local.policies[e].keys, v) == false] }
   data_pools = { for e in local.pool_types : e => [for v in local.reservation[e] : element(split("/", v), 1
   ) if contains(local.pools[e].moids, v) == false] }
+  policies_data = { for k in keys(data.intersight_search_search_item.policies) : k => {
+    for e in lookup(data.intersight_search_search_item.policies[k], "results", []
+      ) : "${local.org_names[jsondecode(e.additional_properties).Organization.Moid]}/${jsondecode(e.additional_properties).Name}" => merge({
+        additional_properties = jsondecode(e.additional_properties)
+        moid                  = e.moid
+    })
+  } }
   pools_data = { for k in keys(data.intersight_search_search_item.pools) : k => {
     for e in lookup(data.intersight_search_search_item.pools[k], "results", []
       ) : "${local.org_names[jsondecode(e.additional_properties).Organization.Moid]}/${jsondecode(e.additional_properties).Name}" => merge({
@@ -145,7 +161,6 @@ locals {
   qko  = { CPUCoresRange = "resource.CPUCoreRangeFilter", SpeedRange = "resource.CpuSpeedRangeFilter" }
   qkr  = { AssetTags = "asset_tags", Pids = "rack_pids", UserLabels = "user_labels" }
   qkt  = { ChassisTags = "chassis_tags", DomainProfileTags = "domain_profile_tags", ServerTags = "server_tags" }
-  spq  = local.policy_defaults.server_pool_qualification
   spqt = ["adapter", "blade_server", "cpu", "domain", "gpu", "memory", "rack_server", "tag_qualifier"]
   server_pool_qualification = { for i in flatten([for org in local.org_keys : [
     for v in lookup(local.policies_model[org], "server_pool_qualification", []) : {
@@ -205,7 +220,7 @@ locals {
           ConditionType = "RANGE"
           MaxValue      = lookup(lookup(lookup(lookup(v, "hardware_qualifiers", {}), "gpu", {}), b, {}), "maximum", 0)
           MinValue      = lookup(lookup(lookup(lookup(v, "hardware_qualifiers", {}), "gpu", {}), b, {}), "minimum", 0)
-          ObjectType    = "${a}Filter"
+          ObjectType    = "resource.${a}Filter"
           } }, {
           GpuEvaluationType = lookup(lookup(lookup(v, "hardware_qualifiers", {}), "gpu", {}), "evaluation_type", "ServerWithoutGpu")
           Pids              = lookup(lookup(lookup(v, "hardware_qualifiers", {}), "gpu", {}), "pids", [])
@@ -219,7 +234,7 @@ locals {
           ConditionType = "RANGE"
           MaxValue      = lookup(lookup(v.hardware_qualifiers.memory, b, {}), "maximum", 0)
           MinValue      = lookup(lookup(v.hardware_qualifiers.memory, b, {}), "minimum", 0)
-          ObjectType    = "${a}Filter"
+          ObjectType    = "resource.${a}Filter"
         } })
         class_id    = "resource.MemoryQualifier"
         object_type = "resource.MemoryQualifier"
@@ -248,7 +263,7 @@ locals {
         class_id    = "resource.TagQualifier"
         object_type = "resource.TagQualifier"
       } : {}
-      tags = lookup(v, "tags", local.global_settings.tags)
+      tags = lookup(v, "tags", var.global_settings.tags)
     }
   ] if length(lookup(local.policies_model[org], "server_pool_qualification", [])) > 0]) : "${i.org}/${i.name}" => i }
 
@@ -259,13 +274,16 @@ locals {
   #____________________________________________________________
   resource = { for i in flatten([for org in local.org_keys : [
     for v in lookup(local.model[org], "resource", []) : merge(local.defaults.resource, v, {
-      name               = "${local.name_prefix[org].resource}${v.name}${local.name_suffix[org].resource}"
-      org                = org
-      serial_number_list = v.serial_number_list
-      tags               = lookup(v, "tags", var.global_settings.tags)
+      name = "${local.name_prefix[org].resource}${v.name}${local.name_suffix[org].resource}"
+      org  = org
+      server_pool_qualification_policies = [for e in [for d in lookup(v, "server_pool_qualification_policies", []) : {
+        name = length(regexall("/", d)) > 0 ? element(split("/", d), 1) : d
+        org  = length(regexall("/", d)) > 0 ? element(split("/", d), 0) : org
+      }] : "${e.org}/${local.ppfx[e.org].server_pool_qualification}${e.name}${local.psfx[e.org].server_pool_qualification}"]
+      tags = lookup(v, "tags", var.global_settings.tags)
     })
   ] if length(lookup(local.model[org], "resource", [])) > 0]) : "${i.org}/${i.name}" => i }
-  serial_number_list = flatten([for k, v in local.resource : v.serial_number_list])
+  serial_number_list = flatten([for k, v in local.resource : v.static_resource_selection])
 
   #____________________________________________________________
   #

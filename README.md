@@ -17,12 +17,12 @@ A Terraform module to configure Intersight Infrastructure Pools.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
-| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.59 |
+| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.61 |
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.59 |
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.61 |
 ## Modules
 
 No modules.
@@ -37,6 +37,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_data_policies"></a> [data\_policies](#output\_data\_policies) | Moid's of the Policies that were not defined locally. |
 | <a name="output_data_pools"></a> [data\_pools](#output\_data\_pools) | Moid's of the Pools that were not defined locally. |
 | <a name="output_ip"></a> [ip](#output\_ip) | Moids of the IP Pools. |
 | <a name="output_iqn"></a> [iqn](#output\_iqn) | Moids of the IQN Pools. |
@@ -45,6 +46,7 @@ No modules.
 | <a name="output_uuid"></a> [uuid](#output\_uuid) | Moids of the UUID Pools. |
 | <a name="output_wwnn"></a> [wwnn](#output\_wwnn) | Moids of the WWNN Pools. |
 | <a name="output_wwpn"></a> [wwpn](#output\_wwpn) | Moids of the WWPN Pools. |
+| <a name="output_server_pool_qualification"></a> [server\_pool\_qualification](#output\_server\_pool\_qualification) | Moids of the Server Pool Qualfication Policies. |
 | <a name="output_reservations"></a> [reservations](#output\_reservations) | Moids of the Pool Reservations. |
 ## Resources
 
@@ -61,8 +63,10 @@ No modules.
 | [intersight_macpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_pool) | resource |
 | [intersight_macpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/macpool_reservation) | resource |
 | [intersight_resourcepool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resourcepool_pool) | resource |
+| [intersight_resourcepool_qualification_policy.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resourcepool_qualification_policy) | resource |
 | [intersight_uuidpool_pool.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_pool) | resource |
 | [intersight_uuidpool_reservation.map](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/uuidpool_reservation) | resource |
 | [intersight_compute_physical_summary.servers](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/compute_physical_summary) | data source |
+| [intersight_search_search_item.policies](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/search_search_item) | data source |
 | [intersight_search_search_item.pools](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/search_search_item) | data source |
 <!-- END_TF_DOCS -->

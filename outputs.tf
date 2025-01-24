@@ -3,6 +3,11 @@
 # Data Object Outputs
 #__________________________________________________________
 
+output "data_policies" {
+  description = "Moid's of the Policies that were not defined locally."
+  value       = { for e in sort(keys(local.policies_data)) : e => { for k, v in local.policies_data[e] : k => v.moid } }
+}
+
 output "data_pools" {
   description = "Moid's of the Pools that were not defined locally."
   value       = { for e in sort(keys(local.pools_data)) : e => { for k, v in local.pools_data[e] : k => v.moid } }
@@ -49,7 +54,7 @@ output "wwpn" {
 
 output "server_pool_qualification" {
   description = "Moids of the Server Pool Qualfication Policies."
-  value = {for k, v in intersight_resourcepool_qualification_policy.map : k => v.moid }
+  value       = { for k, v in intersight_resourcepool_qualification_policy.map : k => v.moid }
 }
 
 #__________________________________________________________

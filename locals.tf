@@ -155,10 +155,10 @@ locals {
   qka  = { AdaptersRange = "number_of_network_adapters" }
   qkb  = { AssetTags = "asset_tags", ChassisPids = "chassis_pids", Pids = "blade_pids", UserLabels = "user_labels" }
   qkd  = { DomainNames = "domain_names", FabricInterConnectPids = "fabric_interconnect_pids" }
-  qkc  = { CPUCoresRange = "number_of_cores", SpeedRange = "speed" }
+  qkc  = { CpuCoresRange = "number_of_cores", SpeedRange = "speed" }
   qkg  = { GpuControllersRange = "number_of_gpus" }
   qkm  = { MemoryCapacityRange = "capacity", MemoryUnitsRange = "number_of_units" }
-  qko  = { CPUCoresRange = "resource.CPUCoreRangeFilter", SpeedRange = "resource.CpuSpeedRangeFilter" }
+  qko  = { CpuCoresRange = "resource.CpuCoreRangeFilter", SpeedRange = "resource.CpuSpeedRangeFilter" }
   qkr  = { AssetTags = "asset_tags", Pids = "rack_pids", UserLabels = "user_labels" }
   qkt  = { ChassisTags = "chassis_tags", DomainProfileTags = "domain_profile_tags", ServerTags = "server_tags" }
   spqt = ["adapter", "blade_server", "cpu", "domain", "gpu", "memory", "rack_server", "tag_qualifier"]
@@ -198,6 +198,7 @@ locals {
       } : {}
       cpu = length(lookup(lookup(v, "hardware_qualifiers", {}), "cpu", {})) > 0 ? {
         additional_properties = jsonencode(merge({ for a, b in local.qkc : a => {
+          ClassId       = local.qko[a]
           ConditionType = "RANGE"
           MaxValue      = lookup(lookup(v.hardware_qualifiers.cpu, b, {}), "maximum", 0)
           MinValue      = lookup(lookup(v.hardware_qualifiers.cpu, b, {}), "minimum", 0)

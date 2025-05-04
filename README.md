@@ -17,12 +17,12 @@ A Terraform module to configure Intersight Infrastructure Pools.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
-| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.61 |
+| <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.64 |
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.61 |
+| <a name="provider_intersight"></a> [intersight](#provider\_intersight) | 1.0.64 |
 ## Modules
 
 No modules.

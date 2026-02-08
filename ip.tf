@@ -5,10 +5,11 @@
 #____________________________________________________________
 
 resource "intersight_ippool_pool" "map" {
-  for_each         = local.ip
-  assignment_order = each.value.assignment_order
-  description      = each.value.description != "" ? each.value.description : "${each.value.name} IP Pool."
-  name             = each.value.name
+  for_each                         = local.ip
+  assignment_order                 = each.value.assignment_order
+  enable_block_level_subnet_config = length(each.value.ipv4_config) == 0 && length(each.value.ipv6_config) == 0 ? true : false
+  description                      = each.value.description != "" ? each.value.description : "${each.value.name} IP Pool."
+  name                             = each.value.name
   dynamic "ip_v4_blocks" {
     for_each = { for v in each.value.ipv4_blocks : v.from => v }
     content {

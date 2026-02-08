@@ -99,6 +99,7 @@ pools:
   ip:
     assignment_order: 'sequential'
     description: ''
+    configure_subnet_at_block_level: false
     ipv4_blocks:
       from: '**REQUIRED**'
       size: null
